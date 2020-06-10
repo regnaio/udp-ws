@@ -6,6 +6,8 @@ As quoted in [Gaffer On Games](https://gafferongames.com/post/why_cant_i_send_ud
 
 <em>“I feel what is needed is a UDP version of WebSockets. That’s all I wish we had.”</em> - Matheus Valadares, creator of [agar.io](https://agar.io/)
 
+[WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket) is built on TCP. UDP preferred over TCP for realtime multiplayer games. See why this is according to [Gaffer On Games: Deterministic Lockstep](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket).
+
 udp-ws is built on [WebRTC](https://webrtc.org/), which allows peer-to-peer UDP communication in the browser. However, udp-ws is designed for client-server communication (e.g. for server-authoritative browser games), not for peer-to-peer communication. udp-ws accomplishes this by treating your server as a peer.
 
 ## Example
