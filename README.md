@@ -16,7 +16,18 @@ Server example:
 TBD
 ```
 
-<br>
+Repository structure:
+- `src/`
+  - `client/`
+    - `ts/` contains client-side `UDPWebSocket.ts`
+  - `server/`
+    - `ts/` contains server-side `UDPWebSocket.ts`
+- `example/`
+  - `client/`
+    - `ts/` contains client-side example using `UDPWebSocket.ts`
+  - `server/`
+    - `ts/` contains server-side example using `UDPWebSocket.ts`
+
 <br>
 
 **gbz**
