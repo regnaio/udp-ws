@@ -20,7 +20,7 @@ Server:
 TBD
 ```
 
-In `example/server/`, run `npm run launch`, and see the example running in [localhost](http://localhost/). Open your console log using `Ctrl` + `Shift` + `I`.
+In `example/server/`, run `npm run launch`, and see the client-server example running in [localhost](http://localhost/). Open your console log using `Ctrl` + `Shift` + `I`.
 
 ## Repository Structure
 
@@ -29,11 +29,16 @@ In `example/server/`, run `npm run launch`, and see the example running in [loca
     - `ts/` contains client-side `UDPWebSocket.ts`
   - `server/`
     - `ts/` contains server-side `UDPWebSocket.ts`
+
+In `src/`, run `npm run build` to compile TypeScript to Javascript in `src/client/js/` and `src/server/js/`.
+
 - `example/`
   - `client/`
     - `ts/` contains client-side example using `UDPWebSocket.ts`
   - `server/`
     - `ts/` contains server-side example using `UDPWebSocket.ts`
+
+In `example/server/`, run `npm run launch`, and run the client-server example, as mentioned above.
 
 <br>
 
