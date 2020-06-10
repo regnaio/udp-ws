@@ -5,11 +5,11 @@ interface GameWebSocket extends WebSocket {
   uuid: string
 }
 
-type JSONData = { [key: string]: string }
+// type JSONData = { [key: string]: string }
 
 interface JSONWebSocketPacket {
   eventName: string,
-  data: JSONData
+  data: object
 }
 
 export class JSONWebSocketServerHandler {
@@ -39,7 +39,7 @@ export class JSONWebSocketServerHandler {
     });
   }
 
-  bind(eventName: string, callback: (gws: GameWebSocket, data: JSONData) => void): void {
+  bind(eventName: string, callback: (gws: GameWebSocket, data: object) => void): void {
     this._callbacks.set(eventName, callback);
   }
 

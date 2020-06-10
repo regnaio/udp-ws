@@ -1,8 +1,8 @@
-type JSONData = { [key: string]: string }
+// type JSONData = { [key: string]: string }
 
 interface JSONWebSocketPacket {
   eventName: string,
-  data: JSONData
+  data: object
 }
 
 export class JSONWebSocketHandler {
@@ -39,7 +39,7 @@ export class JSONWebSocketHandler {
     }
   }
 
-  bind(eventName: string, callback: (data: JSONData) => void): void {
+  bind(eventName: string, callback: (data: object) => void): void {
     this._callbacks.set(eventName, callback);
   }
 
