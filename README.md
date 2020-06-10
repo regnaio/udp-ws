@@ -10,6 +10,8 @@ As quoted in [Gaffer On Games](https://gafferongames.com/post/why_cant_i_send_ud
 
 udp-ws is built on [WebRTC](https://webrtc.org/), which allows peer-to-peer UDP communication in the browser. However, udp-ws is designed for client-server communication (e.g. for server-authoritative browser games), not for peer-to-peer communication. udp-ws accomplishes this by treating your server as a peer.
 
+udp-ws is inspired by and includes code snippets from [geckos.io](https://github.com/geckosio/geckos.io) by [yandeu](https://github.com/yandeu).
+
 ## Example
 
 Client:
