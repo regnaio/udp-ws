@@ -1,0 +1,23 @@
+{
+  "name": "src",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "(cd ./client/ && rm -rf ./js) && (cd ./../server/ && rm -rf ./js)",
+    "build": "npm run clean && (cd ./client/ && tsc) && (cd ./../server/ && tsc)"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "uuid": "^8.1.0",
+    "wrtc": "^0.4.5",
+    "ws": "^7.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.13",
+    "@types/uuid": "^8.0.0",
+    "@types/ws": "^7.2.5"
+  }
+}
