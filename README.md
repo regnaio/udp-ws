@@ -2,8 +2,6 @@
 
 ## Motivation
 
-As quoted in [Gaffer On Games](https://gafferongames.com/post/why_cant_i_send_udp_packets_from_a_browser/),
-
 <em>“I feel what is needed is an UDP version of WebSockets. That’s all I wish we had.”</em> - Matheus Valadares, creator of [agar.io](https://agar.io/)
 
 [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket) is built on TCP. UDP is much preferred over TCP for networking in realtime multiplayer games. Refer to the awesome visualizations in [Gaffer On Games: Deterministic Lockstep](https://gafferongames.com/post/deterministic_lockstep/) to see why.
