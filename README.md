@@ -8,7 +8,7 @@
 
 udp-ws is built on [WebRTC](https://webrtc.org/), which allows peer-to-peer UDP communication in the browser. However, udp-ws is designed for client-server communication (e.g. for server-authoritative browser games), not for peer-to-peer communication. udp-ws accomplishes this by treating your server as a peer.
 
-udp-ws is inspired by and includes code snippets from [geckos.io](https://github.com/geckosio/geckos.io) by [yandeu](https://github.com/yandeu).
+udp-ws is inspired by and includes code snippets from [geckos.io](https://github.com/geckosio/geckos.io) by [yandeu](https://github.com/yandeu) and [node-webrtc-examples](https://github.com/node-webrtc/node-webrtc-examples).
 
 ## Example
 
@@ -30,7 +30,7 @@ In `example/server/`, run `npm run launch`, and see the client-server example ru
   - `client/`
     - `ts/` contains client-side `UDPWebSocket.ts`
   - `server/`
-    - `ts/` contains server-side `UDPWebSocket.ts`
+    - `ts/` contains server-side `UDPWebSocketServer.ts`
 
 If you want Javascript sources, in `src/`, run `npm run build` to compile TypeScript to Javascript in `src/client/js/` and `src/server/js/`. Feel free to use [webpack](https://webpack.js.org/) or [rollup](https://rollupjs.org/guide/en/) for browser compatibility (on the client side) and minification.
 
@@ -38,7 +38,7 @@ If you want Javascript sources, in `src/`, run `npm run build` to compile TypeSc
   - `client/`
     - `ts/` contains client-side example using `UDPWebSocket.ts`
   - `server/`
-    - `ts/` contains server-side example using `UDPWebSocket.ts`
+    - `ts/` contains server-side example using `UDPWebSocketServer.ts`
 
 In `example/server/`, run `npm run launch` to run the client-server example, as mentioned above. Note that webpack is used on the client side for browser compatibility.
 
