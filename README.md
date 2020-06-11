@@ -30,7 +30,7 @@ In `example/server/`, run `npm run launch`, and see the client-server example ru
   - `client/`
     - `ts/` contains client-side `UDPWebSocket.ts`
   - `server/`
-    - `ts/` contains server-side `UDPWebSocket.ts`
+    - `ts/` contains server-side `UDPWebSocketServer.ts`
 
 If you want Javascript sources, in `src/`, run `npm run build` to compile TypeScript to Javascript in `src/client/js/` and `src/server/js/`. Feel free to use [webpack](https://webpack.js.org/) or [rollup](https://rollupjs.org/guide/en/) for browser compatibility (on the client side) and minification.
 
@@ -38,7 +38,7 @@ If you want Javascript sources, in `src/`, run `npm run build` to compile TypeSc
   - `client/`
     - `ts/` contains client-side example using `UDPWebSocket.ts`
   - `server/`
-    - `ts/` contains server-side example using `UDPWebSocket.ts`
+    - `ts/` contains server-side example using `UDPWebSocketServer.ts`
 
 In `example/server/`, run `npm run launch` to run the client-server example, as mentioned above. Note that webpack is used on the client side for browser compatibility.
 
