@@ -1,12 +1,16 @@
 import { JSONWebSocketHandler } from './JSONWebSocketHandler';
-// import { defaultIceServers } from './iceServers';
 
 export class UDPWebSocket {
   private _localPeerConnection: RTCPeerConnection;
   private _JSONWebSocketHandler: JSONWebSocketHandler;
   private _dataChannel: RTCDataChannel;
 
-  constructor(url: string, configuration: RTCConfiguration | undefined = undefined) {
+  onopen: ((ev: Event) => any) | null = null;
+  onmessage: ((ev: MessageEvent) => any) | null = null;
+  onerror: ((ev: Event) => any) | null = null;
+  onclose: ((ev: CloseEvent) => any) | null = null;
+
+  constructor(url: string, configuration?: RTCConfiguration) {
     this._JSONWebSocketHandler = new JSONWebSocketHandler(url, {
       eventName: 'connect',
       data: {}
@@ -17,7 +21,6 @@ export class UDPWebSocket {
       configuration = {
         // @ts-ignore
         sdpSemantics: 'unified-plan',
-        // iceServers: defaultIceServers
         iceTransportPolicy: 'all'
       };
     }
@@ -33,17 +36,37 @@ export class UDPWebSocket {
     this._dataChannel = this._localPeerConnection.createDataChannel('dataChannel', dataChannelConfig);
     this._dataChannel.binaryType = 'arraybuffer';
 
-    this._dataChannel.onopen = () => {
+    this._dataChannel.onopen = (ev: Event) => {
       console.log(`onopen readyState: ${this._dataChannel.readyState}`);
-      this._dataChannel.onmessage = (event: MessageEvent) => {
-        console.log(`onmessage event: ${event}`);
+      console.log(`onopen ev: ${ev}`);
 
+      if (this.onopen !== null) {
+        this.onopen(ev);
+      }
+
+      this._dataChannel.onmessage = (ev: MessageEvent) => {
+        console.log(`onmessage ev: ${ev}`);
+
+        if (this.onmessage !== null) {
+          this.onmessage(ev);
+        }
       };
 
     };
-    this._dataChannel.onclose = () => {
-      console.log(`onclose readyState: ${this._dataChannel.readyState}`);
+    this._dataChannel.onerror = (ev: Event) => {
+      console.log(`onerror ev: ${ev}`);
 
+      if (this.onerror !== null) {
+        this.onerror(ev);
+      }
+    };
+    this._dataChannel.onclose = (ev: Event) => {
+      console.log(`onclose readyState: ${this._dataChannel.readyState}`);
+      console.log(`onclose ev: ${ev}`);
+
+      if (this.onclose !== null) {
+        this.onclose(ev as CloseEvent);
+      }
     };
   }
 
@@ -52,13 +75,14 @@ export class UDPWebSocket {
   }
 
   // Public API start
-  onmessage() {}
+  send(data: string | ArrayBuffer | SharedArrayBuffer | Blob | ArrayBufferView) {
 
-  onopen() {}
+  }
 
-  onerror() {}
-
-  send(data: string | ArrayBuffer | SharedArrayBuffer | Blob | ArrayBufferView) {}
+  set binaryType(binaryType: string) {
+    if (binaryType !== 'blob' && binaryType !== 'arraybuffer') throw `binaryType ${binaryType} does not exist!`;
+    this._dataChannel.binaryType = binaryType;
+  }
   // Public API end
 
   private bindCallbacks() {

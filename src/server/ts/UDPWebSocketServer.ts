@@ -20,6 +20,16 @@ export class UDPWebSocketServer {
 
         break;
       }
+      default: {
+        throw `Event ${event} does not exist for UDPWebSocketServer.on`;
+      }
+    }
+  }
+
+  set binaryType(binaryType: string) {
+    if (binaryType !== 'blob' && binaryType !== 'arraybuffer') throw `binaryType ${binaryType} does not exist!`;
+    for (const [id, socket] of this.clients) {
+      socket.binaryType = binaryType;
     }
   }
   // Public API end
