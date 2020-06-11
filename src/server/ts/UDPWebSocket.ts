@@ -1,19 +1,17 @@
+import { EventEmitter } from 'events';
+
 const wrtc = require('wrtc');
 
 import { iceServers } from './iceServers';
 
 const DefaultRTCPeerConnection: RTCPeerConnection = wrtc.RTCPeerConnection;
 
-export class UDPWebSocket {
+export class UDPWebSocket extends EventEmitter {
   private _localPeerConnection: RTCPeerConnection;
   private _dataChannel: RTCDataChannel;
-  
-  private _onopen?: () => void;
-  private _onmessage?: (data: string | Buffer | ArrayBuffer | Buffer[]) => void;
-  private _onerror?: (err: Error) => void;
-  private _onclose?: (code: number, reason: string) => void;
 
   constructor(configuration?: RTCConfiguration) {
+    super();
     if (configuration === undefined) {
       configuration = {
         iceServers,
@@ -27,7 +25,6 @@ export class UDPWebSocket {
     // @ts-ignore
     this._localPeerConnection = new DefaultRTCPeerConnection(configuration);
     this._localPeerConnection.addEventListener('icecandidate', this.onIceCandidate);
-    // this._localPeerConnection.addEventListener('iceconnectionstatechange', this.onIceConnectionChange);
 
     // console.log(JSON.stringify(this._localPeerConnection, null, 4));
     
@@ -42,43 +39,38 @@ export class UDPWebSocket {
       console.log(`onopen readyState: ${this._dataChannel.readyState}`);
       console.log(`onopen ev: ${ev}`);
 
-      this._dataChannel.onmessage = (ev: MessageEvent) => {
-        console.log(`onmessage event: ${event}`);
+      this.emit('open');
 
-        if (this._onmessage !== undefined) {
-          this._onmessage(ev.data);
-        }
+      this._dataChannel.onmessage = (ev: MessageEvent) => {
+        console.log(`onmessage ev: ${ev}`);
+
+        this.emit('message', ev.data);
       };
 
     };
-    this._dataChannel.onerror = (ev: Event) => {
+    this._dataChannel.onerror = (ev: RTCErrorEvent) => {
       console.log(`onerror ev: ${ev}`);
 
+      this.emit('error', ev);
     };
     this._dataChannel.onclose = (ev: Event) => {
       console.log(`onclose readyState: ${this._dataChannel.readyState}`);
       console.log(`onclose ev: ${ev}`);
 
+      // this.emit('close', ev);
     };
   }
 
   // Public API start
-  on(event: string, cb: (data: string | Buffer | ArrayBuffer | Buffer[]) => void) {
-    switch (event) {
-      case 'message': {
-        this._onmessage = cb;
-        break;
-      }
-      case 'close': {
-        this._onclose = cb;
-        break;
-      }
-      default: {
-        throw `Event ${event} does not exist for UDPWebSocket.on`;
-      }
-    }
+  on(event: 'open' , cb: () => void): this;
+  on(event: 'message', cb: (data: string | Buffer | ArrayBuffer | Buffer[]) => void): this;
+  on(event: 'error', cb: (err: Error) => void): this;
+  on(event: 'close', cb: (code: number, reason: string) => void): this;
+  on(event: string, cb: (...args: any[]) => void): this;
+  on(event: string, cb: (...args: any[]) => void) {
+    return this;
   }
-
+  
   send(data: any, cb?: ((err?: Error | undefined) => void) | undefined): void {
 
   }
@@ -100,13 +92,4 @@ export class UDPWebSocket {
       data: event.candidate || {}
     });
   }
-
-  // private onDataChannelStateChange() {
-  //   const readyState = this._dataChannel.readyState;
-  //   if (readyState === 'open') {
-
-  //   } else {
-      
-  //   }
-  // }
 }

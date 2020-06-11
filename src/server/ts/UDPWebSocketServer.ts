@@ -1,29 +1,25 @@
+import { EventEmitter } from 'events';
+
 import { JSONWebSocketServerHandler } from './JSONWebSocketServerHandler';
 import { UDPWebSocket } from './UDPWebSocket';
 
-export class UDPWebSocketServer {
+export class UDPWebSocketServer extends EventEmitter {
   private _JSONWebSocketServerHandler: JSONWebSocketServerHandler;
 
   clients = new Map<number, UDPWebSocket>();
 
   constructor(port: number, private _configuration: RTCConfiguration | undefined = undefined) {
+    super();
     this._JSONWebSocketServerHandler = new JSONWebSocketServerHandler(port);
 
     this.bindCallbacks();
-
   }
 
   // Public API start
-  on(event: string, cb: (socket: UDPWebSocket) => void) {
-    switch (event) {
-      case 'connection': {
-
-        break;
-      }
-      default: {
-        throw `Event ${event} does not exist for UDPWebSocketServer.on`;
-      }
-    }
+  on(event: 'connection', cb: (socket: WebSocket) => void): this;
+  on(event: string, cb: (...args: any[]) => void): this;
+  on(event: string, cb: (...args: any[]) => void) {
+    return this;
   }
 
   set binaryType(binaryType: string) {
