@@ -1,6 +1,5 @@
 import { JSONWebSocketHandler } from './JSONWebSocketHandler';
-import { defaultIceServers } from './iceServers';
-import { read } from 'fs';
+// import { defaultIceServers } from './iceServers';
 
 export class UDPWebSocket {
   private _localPeerConnection: RTCPeerConnection;
@@ -12,45 +11,77 @@ export class UDPWebSocket {
       eventName: 'connect',
       data: {}
     });
-
     this.bindCallbacks();
 
     if (configuration === undefined) {
       configuration = {
         // @ts-ignore
         sdpSemantics: 'unified-plan',
-        iceServers: defaultIceServers
+        // iceServers: defaultIceServers
+        iceTransportPolicy: 'all'
       };
     }
 
     this._localPeerConnection = new RTCPeerConnection(configuration);
     this._localPeerConnection.addEventListener('icecandidate', this.onIceCandidate);
-    this._localPeerConnection.addEventListener('iceconnectionstatechange', this.onIceConnectionChange);
+    // this._localPeerConnection.addEventListener('iceconnectionstatechange', this.onIceConnectionChange);
 
     const dataChannelConfig = {
       ordered: false,
       maxRetransmits: 0
     };
     this._dataChannel = this._localPeerConnection.createDataChannel('dataChannel', dataChannelConfig);
-    this._dataChannel.onopen = this.onDataChannelStateChange;
-    this._dataChannel.onclose = this.onDataChannelStateChange;
-    this._dataChannel.onmessage = this.onDataChannelMessage;
+    this._dataChannel.binaryType = 'arraybuffer';
+
+    this._dataChannel.onopen = () => {
+      console.log(`onopen readyState: ${this._dataChannel.readyState}`);
+      this._dataChannel.onmessage = (event: MessageEvent) => {
+        console.log(`onmessage event: ${event}`);
+
+      };
+
+    };
+    this._dataChannel.onclose = () => {
+      console.log(`onclose readyState: ${this._dataChannel.readyState}`);
+
+    };
   }
 
+  get readyState(): RTCDataChannelState {
+    return this._dataChannel.readyState;
+  }
+
+  // Public API start
+  onmessage() {}
+
+  onopen() {}
+
+  onerror() {}
+
+  send(data: string | ArrayBuffer | SharedArrayBuffer | Blob | ArrayBufferView) {}
+  // Public API end
+
   private bindCallbacks() {
-    this._JSONWebSocketHandler.bind('connect', (data) => {
-      console.log(`bind connect data: ${data}`);
+    this._JSONWebSocketHandler.bind('offer', async (data) => {
+      console.log(`bind offer data: ${data}`);
 
-    });
-
-    this._JSONWebSocketHandler.bind('signal', (data) => {
-      console.log(`bind signal data: ${data}`);
-
+      try {
+        await this._localPeerConnection.setRemoteDescription(data);
+        await this._localPeerConnection.setLocalDescription(await this._localPeerConnection.createAnswer());
+        this._JSONWebSocketHandler.send({
+          eventName: 'answer',
+          data: this._localPeerConnection.localDescription || {}
+        });
+      } catch (err) {
+        throw err;
+      }
     });
 
     this._JSONWebSocketHandler.bind('icecandidate', (data) => {
       console.log(`bind icecandidate data: ${data}`);
-
+      
+      // @ts-ignore
+      this._localPeerConnection.addIceCandidate(data.candidate);
     });
   }
 
@@ -62,24 +93,17 @@ export class UDPWebSocket {
 
     this._JSONWebSocketHandler.send({
       eventName: 'icecandidate',
-      data: JSON.parse(JSON.stringify(event.candidate))
+      data: event.candidate || {}
     });
   }
-
-  private onIceConnectionChange() {
-
-  }
   
-  private onDataChannelStateChange() {
-    const readyState = this._dataChannel.readyState;
-    if (readyState === 'open') {
+  // private onDataChannelStateChange() {
+  //   const readyState = this._dataChannel.readyState;
+  //   console.log(`onDataChannelStateChange readyState: ${readyState}`);
+  //   if (readyState === 'open') {
 
-    } else {
+  //   } else {
 
-    }
-  }
-
-  private onDataChannelMessage() {
-
-  }
+  //   }
+  // }
 }

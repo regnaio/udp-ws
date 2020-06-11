@@ -28,7 +28,7 @@ export class JSONWebSocketHandler {
   async use(): Promise<void> {
     try {
       await this.connect();
-      if (!this._ws) throw 'WebSocket is undefined!';
+      if (this._ws === undefined) throw 'WebSocket is undefined!';
       this._ws.onmessage = evt => {
         const packet = JSON.parse(evt.data);
         this.dispatch(packet);
@@ -45,7 +45,7 @@ export class JSONWebSocketHandler {
 
   send(packet: JSONWebSocketPacket): void {
     const payload = JSON.stringify(packet);
-    if (!this._ws) throw 'WebSocket is undefined!';
+    if (this._ws === undefined) throw 'WebSocket is undefined!';
     this._ws.send(payload);
   }
 

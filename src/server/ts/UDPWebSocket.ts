@@ -1,78 +1,70 @@
 const wrtc = require('wrtc');
 
-import { JSONWebSocketServerHandler } from './JSONWebSocketServerHandler';
 import { defaultIceServers } from './iceServers';
 
 const DefaultRTCPeerConnection: RTCPeerConnection = wrtc.RTCPeerConnection;
 
-// let configuration: RTCConfiguration = {
-//   // @ts-ignore
-//   sdpSemantics: 'unified-plan'
-// }
-
 export class UDPWebSocket {
   private _localPeerConnection: RTCPeerConnection;
-  private _JSONWebSocketServerHandler: JSONWebSocketServerHandler;
   private _dataChannel: RTCDataChannel;
 
-  constructor(port: number, configuration: RTCConfiguration | undefined = undefined) {
-    this._JSONWebSocketServerHandler = new JSONWebSocketServerHandler(port);
-
-    this.bindCallbacks();
-
+  constructor(configuration: RTCConfiguration | undefined = undefined) {
     if (configuration === undefined) {
       configuration = {
+        iceServers: defaultIceServers,
+
         // @ts-ignore
         sdpSemantics: 'unified-plan',
-        iceServers: defaultIceServers
+        iceTransportPolicy: 'all'
       };
     }
 
     // @ts-ignore
     this._localPeerConnection = new DefaultRTCPeerConnection(configuration);
     this._localPeerConnection.addEventListener('icecandidate', this.onIceCandidate);
-    this._localPeerConnection.addEventListener('iceconnectionstatechange', this.onIceConnectionChange);
+    // this._localPeerConnection.addEventListener('iceconnectionstatechange', this.onIceConnectionChange);
 
-    console.log(JSON.stringify(this._localPeerConnection, null, 4));
+    // console.log(JSON.stringify(this._localPeerConnection, null, 4));
     
     const dataChannelConfig = {
       ordered: false,
       maxRetransmits: 0
     };
     this._dataChannel = this._localPeerConnection.createDataChannel('dataChannel', dataChannelConfig);
-    this._dataChannel.onopen = this.onDataChannelStateChange;
-    this._dataChannel.onclose = this.onDataChannelStateChange;
-    this._dataChannel.onmessage = this.onDataChannelMessage;
+    this._dataChannel.binaryType = 'arraybuffer';
+
+    this._dataChannel.onopen = () => {
+      console.log(`onopen readyState: ${this._dataChannel.readyState}`);
+      this._dataChannel.onmessage = (event: MessageEvent) => {
+        console.log(`onmessage event: ${event}`);
+
+      };
+
+    };
+    this._dataChannel.onclose = () => {
+      console.log(`onclose readyState: ${this._dataChannel.readyState}`);
+
+    };
   }
 
-  private bindCallbacks() {
-    this._JSONWebSocketServerHandler.bind('connect', async (gws, data) => {
-      console.log(`bind connect data: ${data}`);
+  // Public API start
+  on(event: string, cb: (data: string | Buffer | ArrayBuffer | Buffer[]) => void) {
+    switch (event) {
+      case 'message': {
 
-      try {
-        await this._localPeerConnection.setLocalDescription(await this._localPeerConnection.createOffer());
-
-        this._localPeerConnection.localDescription
-      } catch {
-
+        break;
       }
+      case 'close': {
 
-      this._JSONWebSocketServerHandler.send(gws, {
-        eventName: 'signal',
-        data: {}
-      });
-    });
-
-    this._JSONWebSocketServerHandler.bind('signal', (gws, data) => {
-      console.log(`bind signal data: ${data}`);
-
-    });
-
-    this._JSONWebSocketServerHandler.bind('icecandidate', (gws, data) => {
-      console.log(`bind icecandidate data: ${data}`);
-
-    });
+        break;
+      }
+    }
   }
+
+  send(data: any, cb?: ((err?: Error | undefined) => void) | undefined): void {
+
+  }
+  // Public API end
 
   private onIceCandidate(event: RTCPeerConnectionIceEvent) {
     console.log(`onIceCandidate event: ${event}`);
@@ -87,20 +79,12 @@ export class UDPWebSocket {
     });
   }
 
-  private onIceConnectionChange() {
+  // private onDataChannelStateChange() {
+  //   const readyState = this._dataChannel.readyState;
+  //   if (readyState === 'open') {
 
-  }
-
-  private onDataChannelStateChange() {
-    const readyState = this._dataChannel.readyState;
-    if (readyState === 'open') {
-
-    } else {
+  //   } else {
       
-    }
-  }
-
-  private onDataChannelMessage() {
-
-  }
+  //   }
+  // }
 }
