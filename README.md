@@ -14,12 +14,24 @@ udp-ws is inspired by and includes code snippets from [geckos.io](https://github
 
 Client:
 ```
-TBD
+const ws = new UDPWebSocket('ws://localhost:3000');
+
+setInterval(() => {
+  if (ws.readyState === 'open') {
+    ws.send('hi');
+  }
+}, 1000);
 ```
 
 Server:
 ```
-TBD
+const wss = new UDPWebSocketServer(3000);
+
+wss.on('connection', ws => {
+	ws.on('message', data => {
+		console.log(data);
+	});
+});
 ```
 
 In `example/server/`, run `npm run launch`, and see the client-server example running in [localhost](http://localhost/). Open your console log using `Ctrl` + `Shift` + `I`.
