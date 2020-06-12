@@ -20,7 +20,7 @@ class UDPWebSocket extends events_1.EventEmitter {
         }
         // @ts-ignore
         this._localPeerConnection = new DefaultRTCPeerConnection(configuration);
-        this._localPeerConnection.addEventListener('icecandidate', this.onIceCandidate);
+        this._localPeerConnection.addEventListener('icecandidate', this.onIceCandidate.bind(this));
         // console.log(JSON.stringify(this._localPeerConnection, null, 4));
         const dataChannelConfig = {
             ordered: false,
@@ -30,20 +30,20 @@ class UDPWebSocket extends events_1.EventEmitter {
         this._dataChannel.binaryType = 'arraybuffer';
         this._dataChannel.onopen = (ev) => {
             console.log(`onopen readyState: ${this._dataChannel.readyState}`);
-            console.log(`onopen ev: ${ev}`);
+            console.log('onopen ev: ', ev);
             this.emit('open');
             this._dataChannel.onmessage = (ev) => {
-                console.log(`onmessage ev: ${ev}`);
+                console.log('onmessage ev: ', ev);
                 this.emit('message', ev.data);
             };
         };
         this._dataChannel.onerror = (ev) => {
-            console.log(`onerror ev: ${ev}`);
+            console.log('onerror ev: ', ev);
             this.emit('error', ev);
         };
         this._dataChannel.onclose = (ev) => {
             console.log(`onclose readyState: ${this._dataChannel.readyState}`);
-            console.log(`onclose ev: ${ev}`);
+            console.log('onclose ev: ', ev);
             // this.emit('close', ev);
         };
     }
@@ -51,10 +51,8 @@ class UDPWebSocket extends events_1.EventEmitter {
         return this;
     }
     send(data) {
-        console.log(`send data: ${data}`);
-        if (this._dataChannel.readyState === 'open') {
-            this._dataChannel.send(data);
-        }
+        console.log('send data: ', data);
+        this._dataChannel.send(data);
     }
     set binaryType(binaryType) {
         if (binaryType !== 'blob' && binaryType !== 'arraybuffer')
@@ -67,10 +65,12 @@ class UDPWebSocket extends events_1.EventEmitter {
     }
     onIceCandidate(event) {
         var _a;
-        console.log(`onIceCandidate event: ${event}`);
+        console.log('onIceCandidate event: ', event);
         if (event.candidate === null) {
             this._localPeerConnection.removeEventListener('icecandidate', this.onIceCandidate);
+            return;
         }
+        // console.log('clients: ', clients);
         const iws = (_a = UDPWebSocketServer_1.clients.get(this._uuid)) === null || _a === void 0 ? void 0 : _a.iws;
         if (iws === undefined) {
             throw `onIceCandidate iws === undefined`;

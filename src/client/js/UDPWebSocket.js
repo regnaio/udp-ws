@@ -29,61 +29,37 @@ class UDPWebSocket {
             };
         }
         this._localPeerConnection = new RTCPeerConnection(configuration);
-        this._localPeerConnection.addEventListener('icecandidate', this.onIceCandidate);
+        // this._localPeerConnection.addEventListener('icecandidate', this.onIceCandidate);
         // this._localPeerConnection.addEventListener('iceconnectionstatechange', this.onIceConnectionChange);
-        const dataChannelConfig = {
-            ordered: false,
-            maxRetransmits: 0
-        };
-        this._dataChannel = this._localPeerConnection.createDataChannel('dataChannel', dataChannelConfig);
-        this._dataChannel.binaryType = 'arraybuffer';
-        this._dataChannel.onopen = (ev) => {
-            console.log(`onopen readyState: ${this._dataChannel.readyState}`);
-            console.log(`onopen ev: ${ev}`);
-            if (this.onopen !== null) {
-                this.onopen(ev);
-            }
-            this._dataChannel.onmessage = (ev) => {
-                console.log(`onmessage ev: ${ev}`);
-                if (this.onmessage !== null) {
-                    this.onmessage(ev);
-                }
-            };
-        };
-        this._dataChannel.onerror = (ev) => {
-            console.log(`onerror ev: ${ev}`);
-            if (this.onerror !== null) {
-                this.onerror(ev);
-            }
-        };
-        this._dataChannel.onclose = (ev) => {
-            console.log(`onclose readyState: ${this._dataChannel.readyState}`);
-            console.log(`onclose ev: ${ev}`);
-            if (this.onclose !== null) {
-                this.onclose(ev);
-            }
-        };
+        this._localPeerConnection.ondatachannel = this.onDataChannel.bind(this);
+        // const dataChannelConfig = {
+        //   ordered: false,
+        //   maxRetransmits: 0
+        // };
+        // this._dataChannel = this._localPeerConnection.createDataChannel('dataChannel', dataChannelConfig);
+        // this._dataChannel.binaryType = 'arraybuffer';
     }
     get readyState() {
-        return this._dataChannel.readyState;
+        var _a;
+        return ((_a = this._dataChannel) === null || _a === void 0 ? void 0 : _a.readyState) || 'closed';
     }
     // Public API start
     // send(data: string | Blob | ArrayBuffer | ArrayBufferView) {
     send(data) {
-        console.log(`send data: ${data}`);
-        if (this._dataChannel.readyState === 'open') {
-            this._dataChannel.send(data);
+        if (this._dataChannel === undefined) {
+            throw `send this._dataChannel === undefined`;
         }
+        console.log('send data: ', data);
+        this._dataChannel.send(data);
     }
-    set binaryType(binaryType) {
-        if (binaryType !== 'blob' && binaryType !== 'arraybuffer')
-            throw `binaryType ${binaryType} does not exist!`;
-        this._dataChannel.binaryType = binaryType;
-    }
+    // set binaryType(binaryType: string) {
+    //   if (binaryType !== 'blob' && binaryType !== 'arraybuffer') throw `binaryType ${binaryType} does not exist!`;
+    //   this._dataChannel.binaryType = binaryType;
+    // }
     // Public API end
     bindCallbacks() {
         this._JSONWebSocketHandler.bind('offer', (data) => __awaiter(this, void 0, void 0, function* () {
-            console.log(`bind offer data: ${data}`);
+            console.log('bind offer data: ', data);
             try {
                 yield this._localPeerConnection.setRemoteDescription(data);
                 yield this._localPeerConnection.setLocalDescription(yield this._localPeerConnection.createAnswer());
@@ -97,20 +73,40 @@ class UDPWebSocket {
             }
         }));
         this._JSONWebSocketHandler.bind('icecandidate', (data) => {
-            console.log(`bind icecandidate data: ${data}`);
+            console.log('bind icecandidate data: ', data);
             // @ts-ignore
-            this._localPeerConnection.addIceCandidate(data.candidate);
+            this._localPeerConnection.addIceCandidate(data);
         });
     }
-    onIceCandidate(event) {
-        console.log(`onIceCandidate event: ${event}`);
-        if (event.candidate === null) {
-            this._localPeerConnection.removeEventListener('icecandidate', this.onIceCandidate);
-        }
-        this._JSONWebSocketHandler.send({
-            eventName: 'icecandidate',
-            data: event.candidate || {}
-        });
+    onDataChannel(ev) {
+        this._dataChannel = ev.channel;
+        this._dataChannel.onopen = (ev) => {
+            console.log('this._dataChannel.onopen this: ', this);
+            console.log(`onopen readyState: ${this._dataChannel.readyState}`);
+            console.log('onopen ev: ', ev);
+            if (this.onopen !== null) {
+                this.onopen(ev);
+            }
+            this._dataChannel.onmessage = (ev) => {
+                console.log('onmessage ev: ', ev);
+                if (this.onmessage !== null) {
+                    this.onmessage(ev);
+                }
+            };
+        };
+        this._dataChannel.onerror = (ev) => {
+            console.log('onerror ev: ', ev);
+            if (this.onerror !== null) {
+                this.onerror(ev);
+            }
+        };
+        this._dataChannel.onclose = (ev) => {
+            console.log(`onclose readyState: ${this._dataChannel.readyState}`);
+            console.log('onclose ev: ', ev);
+            if (this.onclose !== null) {
+                this.onclose(ev);
+            }
+        };
     }
 }
 exports.UDPWebSocket = UDPWebSocket;

@@ -25,7 +25,7 @@ export class UDPWebSocket extends EventEmitter {
 
     // @ts-ignore
     this._localPeerConnection = new DefaultRTCPeerConnection(configuration);
-    this._localPeerConnection.addEventListener('icecandidate', this.onIceCandidate);
+    this._localPeerConnection.addEventListener('icecandidate', this.onIceCandidate.bind(this));
 
     // console.log(JSON.stringify(this._localPeerConnection, null, 4));
     
@@ -38,25 +38,25 @@ export class UDPWebSocket extends EventEmitter {
 
     this._dataChannel.onopen = (ev: Event) => {
       console.log(`onopen readyState: ${this._dataChannel.readyState}`);
-      console.log(`onopen ev: ${ev}`);
+      console.log('onopen ev: ', ev);
 
       this.emit('open');
 
       this._dataChannel.onmessage = (ev: MessageEvent) => {
-        console.log(`onmessage ev: ${ev}`);
+        console.log('onmessage ev: ', ev);
 
         this.emit('message', ev.data);
       };
 
     };
     this._dataChannel.onerror = (ev: RTCErrorEvent) => {
-      console.log(`onerror ev: ${ev}`);
+      console.log('onerror ev: ', ev);
 
       this.emit('error', ev);
     };
     this._dataChannel.onclose = (ev: Event) => {
       console.log(`onclose readyState: ${this._dataChannel.readyState}`);
-      console.log(`onclose ev: ${ev}`);
+      console.log('onclose ev: ', ev);
 
       // this.emit('close', ev);
     };
@@ -73,10 +73,8 @@ export class UDPWebSocket extends EventEmitter {
   }
   
   send(data: any) {
-    console.log(`send data: ${data}`);
-    if (this._dataChannel.readyState === 'open') {
-      this._dataChannel.send(data);
-    }
+    console.log('send data: ', data);
+    this._dataChannel.send(data);
   }
 
   set binaryType(binaryType: string) {
@@ -90,11 +88,13 @@ export class UDPWebSocket extends EventEmitter {
   }
 
   private onIceCandidate(event: RTCPeerConnectionIceEvent) {
-    console.log(`onIceCandidate event: ${event}`);
+    console.log('onIceCandidate event: ', event);
     if (event.candidate === null) {
       this._localPeerConnection.removeEventListener('icecandidate', this.onIceCandidate);
+      return;
     }
 
+    // console.log('clients: ', clients);
     const iws = clients.get(this._uuid)?.iws;
     if (iws === undefined) {
       throw `onIceCandidate iws === undefined`;

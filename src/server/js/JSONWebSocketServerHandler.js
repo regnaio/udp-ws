@@ -12,18 +12,18 @@ class JSONWebSocketServerHandler {
             port
         });
         this._wss.on('connection', (ws, req) => {
-            console.log(`User connected to game (IP: ${req.connection.remoteAddress}).`);
+            console.log(`User connected (IP: ${req.connection.remoteAddress}).`);
             const iws = ws;
             iws.uuid = this._id;
             this._id++;
             console.log(`gws.uuid: ${iws.uuid}`);
             iws.on('message', msg => {
-                console.log(msg);
+                // console.log(msg);
                 const packet = JSON.parse(msg);
                 this.dispatch(iws, packet);
             });
             iws.on('close', () => {
-                console.log(`User disconnected from game (IP: ${req.connection.remoteAddress}).`);
+                console.log(`User disconnected (IP: ${req.connection.remoteAddress}).`);
             });
         });
     }

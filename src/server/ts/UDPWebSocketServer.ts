@@ -42,7 +42,8 @@ export class UDPWebSocketServer extends EventEmitter {
 
   private bindCallbacks() {
     this._JSONWebSocketServerHandler.bind('connect', async (iws, data) => {
-      console.log(`bind connect data: ${data}`);
+      console.log('bind connect data: ', data);
+      console.log(`iws.uuid: ${iws.uuid}`);
       const client = new UDPWebSocket(iws.uuid, this, this._configuration);
       this.clients.set(iws.uuid, {
         iws,
@@ -63,7 +64,7 @@ export class UDPWebSocketServer extends EventEmitter {
     });
 
     this._JSONWebSocketServerHandler.bind('answer', async (iws, data) => {
-      console.log(`bind answer data: ${data}`);
+      console.log('bind answer data: ', data);
 
       const client = this.clients.get(iws.uuid)?.client;
       if (client === undefined) {
@@ -78,7 +79,7 @@ export class UDPWebSocketServer extends EventEmitter {
     });
 
     this._JSONWebSocketServerHandler.bind('icecandidate', (iws, data) => {
-      console.log(`bind icecandidate data: ${data}`);
+      console.log('bind icecandidate data: ', data);
 
       const client = this.clients.get(iws.uuid);
       if (client === undefined) {
