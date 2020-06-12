@@ -35,8 +35,6 @@ export class UDPWebSocket extends EventEmitter {
     this._localPeerConnection = new DefaultRTCPeerConnection(configuration);
     this._localPeerConnection.addEventListener('icecandidate', this.onIceCandidate.bind(this));
 
-    // console.log(JSON.stringify(this._localPeerConnection, null, 4));
-    
     const dataChannelConfig = {
       ordered: false,
       maxRetransmits: 0
@@ -51,7 +49,6 @@ export class UDPWebSocket extends EventEmitter {
       this.emit('open');
 
       this._dataChannel.onmessage = (ev: MessageEvent) => {
-        // console.log('this._dataChannel.onmessage this: ', this);
         console.log('onmessage ev: ', ev);
 
         this.emit('message', ev.data);
@@ -94,7 +91,6 @@ export class UDPWebSocket extends EventEmitter {
       return;
     }
 
-    // console.log('clients: ', clients);
     const iws = clients.get(this._uuid)?.iws;
     if (iws === undefined) {
       throw `onIceCandidate iws === undefined`;

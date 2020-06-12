@@ -27,12 +27,6 @@ export class UDPWebSocketServer extends EventEmitter {
   }
 
   // Public API start
-  // on(event: 'connection', listener: (socket: UDPWebSocket) => void): this;
-  // on(event: string, listener: (...args: any[]) => void): this;
-  // on(event: string, listener: (...args: any[]) => void) {
-  //   return this;
-  // }
-
   set binaryType(binaryType: string) {
     if (binaryType !== 'blob' && binaryType !== 'arraybuffer') throw `binaryType ${binaryType} does not exist!`;
     for (const [id, { client }] of this.clients) {

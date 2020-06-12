@@ -26,18 +26,7 @@ export class UDPWebSocket {
     }
 
     this._localPeerConnection = new RTCPeerConnection(configuration);
-    // this._localPeerConnection.addEventListener('icecandidate', this.onIceCandidate);
-    // this._localPeerConnection.addEventListener('iceconnectionstatechange', this.onIceConnectionChange);
     this._localPeerConnection.ondatachannel = this.onDataChannel.bind(this);
-
-    // const dataChannelConfig = {
-    //   ordered: false,
-    //   maxRetransmits: 0
-    // };
-    // this._dataChannel = this._localPeerConnection.createDataChannel('dataChannel', dataChannelConfig);
-    // this._dataChannel.binaryType = 'arraybuffer';
-
-    
   }
 
   get readyState(): RTCDataChannelState {
@@ -122,26 +111,4 @@ export class UDPWebSocket {
       }
     };
   }
-
-  // private onIceCandidate(event: RTCPeerConnectionIceEvent) {
-  //   console.log('onIceCandidate event: ', event);
-  //   if (event.candidate === null) {
-  //     this._localPeerConnection.removeEventListener('icecandidate', this.onIceCandidate);
-  //   }
-
-  //   this._JSONWebSocketHandler.send({
-  //     eventName: 'icecandidate',
-  //     data: event.candidate || {}
-  //   });
-  // }
-  
-  // private onDataChannelStateChange() {
-  //   const readyState = this._dataChannel.readyState;
-  //   console.log(`onDataChannelStateChange readyState: ${readyState}`);
-  //   if (readyState === 'open') {
-
-  //   } else {
-
-  //   }
-  // }
 }

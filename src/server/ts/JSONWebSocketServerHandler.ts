@@ -5,8 +5,6 @@ export interface IDWebSocket extends WebSocket {
   uuid: number
 }
 
-// type JSONData = { [key: string]: string }
-
 interface JSONWebSocketPacket {
   eventName: string,
   data: object
