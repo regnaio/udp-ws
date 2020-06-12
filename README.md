@@ -12,7 +12,7 @@ udp-ws is inspired by and includes code snippets from [geckos.io](https://github
 
 ## Example
 
-Client:
+Client (resembles [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)):
 ```
 const ws = new UDPWebSocket('ws://localhost:3000');
 
@@ -27,7 +27,7 @@ setInterval(() => {
 }, 1000);
 ```
 
-Server:
+Server (resembles [ws](https://www.npmjs.com/package/ws)):
 ```
 const wss = new UDPWebSocketServer(3000);
 
