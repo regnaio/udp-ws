@@ -1,9 +1,18 @@
 import express from 'express';
 const app = express();
 
-import { UDPWebSocket } from './../../../src/server/ts/UDPWebSocket';
+import { UDPWebSocketServer } from '../../../src/server/ts/UDPWebSocketServer';
 
-new UDPWebSocket(3000);
+const wss = new UDPWebSocketServer(3000);
+wss.on('connection', ws => {
+	ws.on('message', data => {
+		console.log(data);
+	});
+
+	ws.on('close', () => {
+		console.log('close');
+	});
+});
 
 // see tsconfig rootDirs and js folder to see why we have so many ../
 app.use(express.static(__dirname + '/../../../../../client/'));

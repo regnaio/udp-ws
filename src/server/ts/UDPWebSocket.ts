@@ -72,8 +72,11 @@ export class UDPWebSocket extends EventEmitter {
     return this;
   }
   
-  send(data: any, cb?: ((err?: Error | undefined) => void) | undefined): void {
-
+  send(data: any) {
+    console.log(`send data: ${data}`);
+    if (this._dataChannel.readyState === 'open') {
+      this._dataChannel.send(data);
+    }
   }
 
   set binaryType(binaryType: string) {

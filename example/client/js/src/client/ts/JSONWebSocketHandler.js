@@ -1,4 +1,5 @@
 "use strict";
+// type JSONData = { [key: string]: string }
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -31,7 +32,7 @@ class JSONWebSocketHandler {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.connect();
-                if (!this._ws)
+                if (this._ws === undefined)
                     throw 'WebSocket is undefined!';
                 this._ws.onmessage = evt => {
                     const packet = JSON.parse(evt.data);
@@ -49,7 +50,7 @@ class JSONWebSocketHandler {
     }
     send(packet) {
         const payload = JSON.stringify(packet);
-        if (!this._ws)
+        if (this._ws === undefined)
             throw 'WebSocket is undefined!';
         this._ws.send(payload);
     }

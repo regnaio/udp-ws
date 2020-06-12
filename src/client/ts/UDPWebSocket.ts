@@ -75,8 +75,12 @@ export class UDPWebSocket {
   }
 
   // Public API start
-  send(data: string | ArrayBuffer | SharedArrayBuffer | Blob | ArrayBufferView) {
-
+  // send(data: string | Blob | ArrayBuffer | ArrayBufferView) {
+  send(data: any) {
+    console.log(`send data: ${data}`);
+    if (this._dataChannel.readyState === 'open') {
+      this._dataChannel.send(data);
+    }
   }
 
   set binaryType(binaryType: string) {

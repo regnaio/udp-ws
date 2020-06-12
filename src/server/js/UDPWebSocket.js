@@ -50,7 +50,11 @@ class UDPWebSocket extends events_1.EventEmitter {
     on(event, cb) {
         return this;
     }
-    send(data, cb) {
+    send(data) {
+        console.log(`send data: ${data}`);
+        if (this._dataChannel.readyState === 'open') {
+            this._dataChannel.send(data);
+        }
     }
     set binaryType(binaryType) {
         if (binaryType !== 'blob' && binaryType !== 'arraybuffer')
