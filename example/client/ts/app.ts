@@ -1,7 +1,7 @@
 import { UDPWebSocket } from './../../../src/client/ts/UDPWebSocket';
 
-// const ws = new UDPWebSocket('ws://localhost:3000');
-const ws = new UDPWebSocket('ws://13.59.33.46:3000');
+const ws = new UDPWebSocket('ws://localhost:3000');
+// const ws = new UDPWebSocket('ws://13.59.33.46:3000');
 
 ws.onopen = ev => {
   console.log('open');
