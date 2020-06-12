@@ -10,6 +10,7 @@ const wss = new UDPWebSocketServer_1.UDPWebSocketServer(3000);
 wss.on('connection', ws => {
     ws.on('message', data => {
         console.log(data);
+        ws.send('server says hi');
     });
     ws.on('close', () => {
         console.log('close');

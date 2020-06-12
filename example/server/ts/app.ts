@@ -4,9 +4,11 @@ const app = express();
 import { UDPWebSocketServer } from '../../../src/server/ts/UDPWebSocketServer';
 
 const wss = new UDPWebSocketServer(3000);
+
 wss.on('connection', ws => {
 	ws.on('message', data => {
 		console.log(data);
+		ws.send('server says hi');
 	});
 
 	ws.on('close', () => {

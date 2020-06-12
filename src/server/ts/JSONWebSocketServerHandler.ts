@@ -30,7 +30,6 @@ export class JSONWebSocketServerHandler {
       console.log(`gws.uuid: ${iws.uuid}`);
       
       iws.on('message', msg => {
-        // console.log(msg);
         const packet = JSON.parse(msg as string);
         this.dispatch(iws, packet);
       });

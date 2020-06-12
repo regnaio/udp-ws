@@ -7,6 +7,14 @@ import { iceServers } from './iceServers';
 
 const DefaultRTCPeerConnection: RTCPeerConnection = wrtc.RTCPeerConnection;
 
+export declare interface UDPWebSocket {
+  on(event: 'open' , cb: () => void): this;
+  on(event: 'message', cb: (data: string | Buffer | ArrayBuffer | Buffer[]) => void): this;
+  on(event: 'error', cb: (err: Error) => void): this;
+  on(event: 'close', cb: (code: number, reason: string) => void): this;
+  on(event: string, cb: (...args: any[]) => void): this;
+}
+
 export class UDPWebSocket extends EventEmitter {
   private _localPeerConnection: RTCPeerConnection;
   private _dataChannel: RTCDataChannel;
@@ -43,6 +51,7 @@ export class UDPWebSocket extends EventEmitter {
       this.emit('open');
 
       this._dataChannel.onmessage = (ev: MessageEvent) => {
+        // console.log('this._dataChannel.onmessage this: ', this);
         console.log('onmessage ev: ', ev);
 
         this.emit('message', ev.data);
@@ -63,15 +72,6 @@ export class UDPWebSocket extends EventEmitter {
   }
 
   // Public API start
-  on(event: 'open' , cb: () => void): this;
-  on(event: 'message', cb: (data: string | Buffer | ArrayBuffer | Buffer[]) => void): this;
-  on(event: 'error', cb: (err: Error) => void): this;
-  on(event: 'close', cb: (code: number, reason: string) => void): this;
-  on(event: string, cb: (...args: any[]) => void): this;
-  on(event: string, cb: (...args: any[]) => void) {
-    return this;
-  }
-  
   send(data: any) {
     console.log('send data: ', data);
     this._dataChannel.send(data);

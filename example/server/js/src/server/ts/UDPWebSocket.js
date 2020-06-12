@@ -33,6 +33,7 @@ class UDPWebSocket extends events_1.EventEmitter {
             console.log('onopen ev: ', ev);
             this.emit('open');
             this._dataChannel.onmessage = (ev) => {
+                // console.log('this._dataChannel.onmessage this: ', this);
                 console.log('onmessage ev: ', ev);
                 this.emit('message', ev.data);
             };
@@ -47,9 +48,7 @@ class UDPWebSocket extends events_1.EventEmitter {
             // this.emit('close', ev);
         };
     }
-    on(event, cb) {
-        return this;
-    }
+    // Public API start
     send(data) {
         console.log('send data: ', data);
         this._dataChannel.send(data);

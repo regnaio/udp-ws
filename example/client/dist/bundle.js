@@ -94,7 +94,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nconst UDPWebSocket_1 = __webpack_require__(/*! ./../../../src/client/ts/UDPWebSocket */ \"./js/src/client/ts/UDPWebSocket.js\");\r\nconst ws = new UDPWebSocket_1.UDPWebSocket('ws://localhost:3000');\r\nws.onopen = ev => {\r\n    console.log('open');\r\n};\r\nws.onmessage = ev => {\r\n    console.log(`onmessage ev: ${ev}`);\r\n};\r\nws.onerror = ev => {\r\n    console.log(`onerror ev: ${ev}`);\r\n};\r\nws.onclose = ev => {\r\n    console.log('close');\r\n};\r\nsetInterval(() => {\r\n    if (ws.readyState === 'open') {\r\n        ws.send('hi');\r\n    }\r\n}, 1000);\r\n\n\n//# sourceURL=webpack:///./js/example/client/ts/app.js?");
+eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nconst UDPWebSocket_1 = __webpack_require__(/*! ./../../../src/client/ts/UDPWebSocket */ \"./js/src/client/ts/UDPWebSocket.js\");\r\nconst ws = new UDPWebSocket_1.UDPWebSocket('ws://localhost:3000');\r\nws.onopen = ev => {\r\n    console.log('open');\r\n};\r\nws.onmessage = ev => {\r\n    console.log(`onmessage ev: ${ev.data}`);\r\n};\r\nws.onerror = ev => {\r\n    console.log(`onerror ev: ${ev}`);\r\n};\r\nws.onclose = ev => {\r\n    console.log('close');\r\n};\r\nsetInterval(() => {\r\n    if (ws.readyState === 'open') {\r\n        ws.send('client says hi');\r\n    }\r\n}, 1000);\r\n\n\n//# sourceURL=webpack:///./js/example/client/ts/app.js?");
 
 /***/ }),
 

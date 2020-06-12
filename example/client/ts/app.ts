@@ -7,7 +7,7 @@ ws.onopen = ev => {
 };
 
 ws.onmessage = ev => {
-  console.log(`onmessage ev: ${ev}`);
+  console.log(`onmessage ev: ${ev.data}`);
 };
 
 ws.onerror = ev => {
@@ -20,6 +20,6 @@ ws.onclose = ev => {
 
 setInterval(() => {
   if (ws.readyState === 'open') {
-    ws.send('hi');
+    ws.send('client says hi');
   }
 }, 1000);

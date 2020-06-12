@@ -9,6 +9,11 @@ export const clients = new Map<number, {
   client: UDPWebSocket
 }>();
 
+export declare interface UDPWebSocketServer {
+  on(event: 'connection', listener: (socket: UDPWebSocket) => void): this;
+  on(event: string, listener: (...args: any[]) => void): this;
+}
+
 export class UDPWebSocketServer extends EventEmitter {
   private _JSONWebSocketServerHandler: JSONWebSocketServerHandler;
 
@@ -22,11 +27,11 @@ export class UDPWebSocketServer extends EventEmitter {
   }
 
   // Public API start
-  on(event: 'connection', cb: (socket: UDPWebSocket) => void): this;
-  on(event: string, cb: (...args: any[]) => void): this;
-  on(event: string, cb: (...args: any[]) => void) {
-    return this;
-  }
+  // on(event: 'connection', listener: (socket: UDPWebSocket) => void): this;
+  // on(event: string, listener: (...args: any[]) => void): this;
+  // on(event: string, listener: (...args: any[]) => void) {
+  //   return this;
+  // }
 
   set binaryType(binaryType: string) {
     if (binaryType !== 'blob' && binaryType !== 'arraybuffer') throw `binaryType ${binaryType} does not exist!`;
@@ -49,6 +54,7 @@ export class UDPWebSocketServer extends EventEmitter {
         iws,
         client
       });
+
       this.emit('connection', client);
 
       try {

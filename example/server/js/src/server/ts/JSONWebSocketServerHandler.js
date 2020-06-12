@@ -18,7 +18,6 @@ class JSONWebSocketServerHandler {
             this._id++;
             console.log(`gws.uuid: ${iws.uuid}`);
             iws.on('message', msg => {
-                // console.log(msg);
                 const packet = JSON.parse(msg);
                 this.dispatch(iws, packet);
             });
