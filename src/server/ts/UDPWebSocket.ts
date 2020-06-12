@@ -2,6 +2,7 @@ import { EventEmitter } from 'events';
 
 const wrtc = require('wrtc');
 
+import { clients, UDPWebSocketServer } from './UDPWebSocketServer';
 import { iceServers } from './iceServers';
 
 const DefaultRTCPeerConnection: RTCPeerConnection = wrtc.RTCPeerConnection;
@@ -10,7 +11,7 @@ export class UDPWebSocket extends EventEmitter {
   private _localPeerConnection: RTCPeerConnection;
   private _dataChannel: RTCDataChannel;
 
-  constructor(configuration?: RTCConfiguration) {
+  constructor(private _uuid: number, private _UDPWebSocketServer: UDPWebSocketServer, configuration?: RTCConfiguration) {
     super();
     if (configuration === undefined) {
       configuration = {
@@ -81,13 +82,22 @@ export class UDPWebSocket extends EventEmitter {
   }
   // Public API end
 
+  get localPeerConnection(): RTCPeerConnection {
+    return this._localPeerConnection;
+  }
+
   private onIceCandidate(event: RTCPeerConnectionIceEvent) {
     console.log(`onIceCandidate event: ${event}`);
     if (event.candidate === null) {
       this._localPeerConnection.removeEventListener('icecandidate', this.onIceCandidate);
     }
 
-    this._JSONWebSocketServerHandler.send(gws, {
+    const iws = clients.get(this._uuid)?.iws;
+    if (iws === undefined) {
+      throw `onIceCandidate iws === undefined`;
+    }
+
+    this._UDPWebSocketServer.JSONWebSocketServerHandler.send(iws, {
       eventName: 'icecandidate',
       data: event.candidate || {}
     });

@@ -90,7 +90,7 @@ export class UDPWebSocket {
       console.log(`bind offer data: ${data}`);
 
       try {
-        await this._localPeerConnection.setRemoteDescription(data);
+        await this._localPeerConnection.setRemoteDescription(data as RTCSessionDescriptionInit);
         await this._localPeerConnection.setLocalDescription(await this._localPeerConnection.createAnswer());
         this._JSONWebSocketHandler.send({
           eventName: 'answer',
