@@ -17,9 +17,9 @@ Client:
 const ws = new UDPWebSocket('ws://localhost:3000');
 
 setInterval(() => {
-  if (ws.readyState === 'open') {
-    ws.send('hi');
-  }
+    if (ws.readyState === 'open') {
+        ws.send('hi');
+    }
 }, 1000);
 ```
 
@@ -28,9 +28,9 @@ Server:
 const wss = new UDPWebSocketServer(3000);
 
 wss.on('connection', ws => {
-	ws.on('message', data => {
-		console.log(data);
-	});
+    ws.on('message', data => {
+        console.log(data);
+    });
 });
 ```
 
