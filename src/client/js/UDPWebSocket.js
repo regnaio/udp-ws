@@ -29,15 +29,7 @@ class UDPWebSocket {
             };
         }
         this._localPeerConnection = new RTCPeerConnection(configuration);
-        // this._localPeerConnection.addEventListener('icecandidate', this.onIceCandidate);
-        // this._localPeerConnection.addEventListener('iceconnectionstatechange', this.onIceConnectionChange);
         this._localPeerConnection.ondatachannel = this.onDataChannel.bind(this);
-        // const dataChannelConfig = {
-        //   ordered: false,
-        //   maxRetransmits: 0
-        // };
-        // this._dataChannel = this._localPeerConnection.createDataChannel('dataChannel', dataChannelConfig);
-        // this._dataChannel.binaryType = 'arraybuffer';
     }
     get readyState() {
         var _a;

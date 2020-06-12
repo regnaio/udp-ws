@@ -23,11 +23,6 @@ class UDPWebSocketServer extends events_1.EventEmitter {
         this.bindCallbacks();
     }
     // Public API start
-    // on(event: 'connection', listener: (socket: UDPWebSocket) => void): this;
-    // on(event: string, listener: (...args: any[]) => void): this;
-    // on(event: string, listener: (...args: any[]) => void) {
-    //   return this;
-    // }
     set binaryType(binaryType) {
         if (binaryType !== 'blob' && binaryType !== 'arraybuffer')
             throw `binaryType ${binaryType} does not exist!`;
