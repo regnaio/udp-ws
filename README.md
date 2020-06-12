@@ -16,9 +16,13 @@ Client:
 ```
 const ws = new UDPWebSocket('ws://localhost:3000');
 
+ws.onmessage = ev => {
+    console.log(ev.data);
+};
+
 setInterval(() => {
     if (ws.readyState === 'open') {
-        ws.send('hi');
+        ws.send('client says hi');
     }
 }, 1000);
 ```
@@ -30,6 +34,7 @@ const wss = new UDPWebSocketServer(3000);
 wss.on('connection', ws => {
     ws.on('message', data => {
         console.log(data);
+        ws.send('server says hi');
     });
 });
 ```
