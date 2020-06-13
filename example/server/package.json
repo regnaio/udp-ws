@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "postinstall": "(cd ./../client/ && npm i) && (cd ./../../src/client/ && npm i) && (cd ./../server/ && npm i)",
     "clean": "rm -rf ./js",
     "launch": "(cd ./../client/ && npm run build && cd ./../server/) && npm run clean && tsc && node ./js/example/server/ts/app.js"
   },
