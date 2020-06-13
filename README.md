@@ -51,6 +51,8 @@ In `example/server/`, run `npm run launch`, and see the client-server example ru
 - Install webpack-cli
     - `npm i -g webpack-cli`
 
+Run `npm i` in `example/server/` to install all npm packages for all folders.
+
 You can then run `npm run launch` in `example/server/`, as mentioned above.
 
 ## Repository Structure
