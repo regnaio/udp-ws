@@ -41,7 +41,18 @@ wss.on('connection', ws => {
 
 In `example/server/`, run `npm run launch`, and see the client-server example running in [localhost](http://localhost/). Open your console log using `Ctrl` + `Shift` + `I`.
 
+## Prerequisites
+
+- Install `node` and `npm`
+- Install TypeScript
+    - `npm i -g typescript`
+- Install [webpack](https://webpack.js.org/)
+    - `npm i -g webpack`
+- Install webpack-cli
+    - `npm i -g webpack-cli`
+
 ## Repository Structure
+
 #### `src/` contains the library source code
 - `src/`
   - `client/`
@@ -58,7 +69,7 @@ If you want Javascript sources, in `src/`, run `npm run build` to compile TypeSc
   - `server/`
     - `ts/` contains server-side example using `UDPWebSocketServer.ts`
 
-In `example/server/`, run `npm run launch` to run the client-server example, as mentioned above. Note that webpack is used on the client side for browser compatibility.
+In `example/server/`, run `npm run launch` to run the client-server example, as mentioned above. Note that [webpack](https://webpack.js.org/) is used on the client side for browser compatibility.
 
 <br>
 
