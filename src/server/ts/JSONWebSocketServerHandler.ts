@@ -23,6 +23,7 @@ export class JSONWebSocketServerHandler {
     this._wss.on('connection', (ws, req) => {
       console.log(`User connected (IP: ${req.connection.remoteAddress}).`);
       const iws = ws as IDWebSocket;
+      iws.binaryType = 'arraybuffer';
       iws.uuid = this._id;
       this._id++;
       console.log(`gws.uuid: ${iws.uuid}`);

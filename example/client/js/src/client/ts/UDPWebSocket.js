@@ -16,11 +16,9 @@ class UDPWebSocket {
         this.onmessage = null;
         this.onerror = null;
         this.onclose = null;
-        this._JSONWebSocketHandler = new JSONWebSocketHandler_1.JSONWebSocketHandler(url, {
-            eventName: 'connect',
-            data: {}
-        });
+        this._JSONWebSocketHandler = new JSONWebSocketHandler_1.JSONWebSocketHandler(url);
         this.bindCallbacks();
+        this.startSignaling();
         if (configuration === undefined) {
             configuration = {
                 // @ts-ignore
@@ -31,11 +29,11 @@ class UDPWebSocket {
         this._localPeerConnection = new RTCPeerConnection(configuration);
         this._localPeerConnection.ondatachannel = this.onDataChannel.bind(this);
     }
+    // Public API start
     get readyState() {
         var _a;
         return ((_a = this._dataChannel) === null || _a === void 0 ? void 0 : _a.readyState) || 'closed';
     }
-    // Public API start
     // send(data: string | Blob | ArrayBuffer | ArrayBufferView) {
     send(data) {
         if (this._dataChannel === undefined) {
@@ -44,11 +42,28 @@ class UDPWebSocket {
         console.log('send data: ', data);
         this._dataChannel.send(data);
     }
-    // set binaryType(binaryType: string) {
-    //   if (binaryType !== 'blob' && binaryType !== 'arraybuffer') throw `binaryType ${binaryType} does not exist!`;
-    //   this._dataChannel.binaryType = binaryType;
-    // }
+    set binaryType(binaryType) {
+        if (binaryType !== 'blob' && binaryType !== 'arraybuffer')
+            throw `binaryType ${binaryType} does not exist!`;
+        if (this._dataChannel === undefined)
+            throw `this._dataChannel === undefined`;
+        this._dataChannel.binaryType = binaryType;
+    }
     // Public API end
+    startSignaling() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this._JSONWebSocketHandler.connect();
+                this._JSONWebSocketHandler.send({
+                    eventName: 'connect',
+                    data: {}
+                });
+            }
+            catch (err) {
+                throw err;
+            }
+        });
+    }
     bindCallbacks() {
         this._JSONWebSocketHandler.bind('offer', (data) => __awaiter(this, void 0, void 0, function* () {
             console.log('bind offer data: ', data);

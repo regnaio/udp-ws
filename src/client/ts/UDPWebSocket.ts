@@ -11,11 +11,9 @@ export class UDPWebSocket {
   onclose: ((ev: CloseEvent) => any) | null = null;
 
   constructor(url: string, configuration?: RTCConfiguration) {
-    this._JSONWebSocketHandler = new JSONWebSocketHandler(url, {
-      eventName: 'connect',
-      data: {}
-    });
+    this._JSONWebSocketHandler = new JSONWebSocketHandler(url);
     this.bindCallbacks();
+    this.startSignaling();
 
     if (configuration === undefined) {
       configuration = {
@@ -29,13 +27,13 @@ export class UDPWebSocket {
     this._localPeerConnection.ondatachannel = this.onDataChannel.bind(this);
   }
 
+  // Public API start
   get readyState(): RTCDataChannelState {
     return this._dataChannel?.readyState || 'closed';
   }
 
-  // Public API start
   // send(data: string | Blob | ArrayBuffer | ArrayBufferView) {
-  send(data: any) {
+  send(data: any): void {
     if (this._dataChannel === undefined) {
       throw `send this._dataChannel === undefined`;
     }
@@ -44,13 +42,26 @@ export class UDPWebSocket {
     this._dataChannel.send(data);
   }
 
-  // set binaryType(binaryType: string) {
-  //   if (binaryType !== 'blob' && binaryType !== 'arraybuffer') throw `binaryType ${binaryType} does not exist!`;
-  //   this._dataChannel.binaryType = binaryType;
-  // }
+  set binaryType(binaryType: string) {
+    if (binaryType !== 'blob' && binaryType !== 'arraybuffer') throw `binaryType ${binaryType} does not exist!`;
+    if (this._dataChannel === undefined) throw `this._dataChannel === undefined`;
+    this._dataChannel.binaryType = binaryType;
+  }
   // Public API end
 
-  private bindCallbacks() {
+  private async startSignaling(): Promise<void> {
+    try {
+      await this._JSONWebSocketHandler.connect();
+      this._JSONWebSocketHandler.send({
+        eventName: 'connect',
+        data: {}
+      });
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  private bindCallbacks(): void {
     this._JSONWebSocketHandler.bind('offer', async (data) => {
       console.log('bind offer data: ', data);
 
