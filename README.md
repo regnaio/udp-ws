@@ -41,7 +41,7 @@ wss.on('connection', ws => {
 });
 ```
 
-In `examples/reply/server/`, run `npm run launch`, and see the client-server example running in [localhost](http://localhost/). Open your console log using `Ctrl` + `Shift` + `I`.
+In `examples/barebone/server/`, run `npm run launch`, and see the client-server example running in [localhost](http://localhost/). Open your console log using `Ctrl` + `Shift` + `I`.
 
 ## Prerequisites
 
@@ -53,7 +53,7 @@ In `examples/reply/server/`, run `npm run launch`, and see the client-server exa
 - Install webpack-cli
     - `npm i -g webpack-cli`
 
-Run `npm i` in `examples/reply/server/` to install all npm packages for all folders.
+Run `npm i` in `examples/barebone/server/` to install all npm packages for all folders.
 
 You can then run `npm run launch` in `example/server/`, as mentioned above.
 
