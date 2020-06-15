@@ -59,6 +59,16 @@ In `examples/barebones/server/`, run `npm i` followed by `npm run launch`, and s
 
 <br>
 
+Structure of packet: JSON object
+<pre>
+{
+    event: '<em>name of event</em>',
+    data: { <em>...arbitrary data...</em> }
+}
+</pre>
+
+<br>
+
 Client:
 <pre>
 (async () => {
@@ -103,6 +113,8 @@ In `examples/handler/server/`, run `npm i` followed by `npm run launch`.
 #### 3. `examples/binaryHandler/` - Handling WebSocket life cycle, binary messaging, and events using
 - `BinaryWebSocketHandler`
 - `BinaryWebSocketServerHandler`
+
+<br>
 
 Structure of packet: ArrayBuffer with leading Uint8 representing the event followed by an arbitrary number of bytes representing the data
 
