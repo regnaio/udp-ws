@@ -2,11 +2,11 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "postinstall": "(cd ./../client/ && npm i) && (cd ./../../src/client/ && npm i) && (cd ./../server/ && npm i)",
     "clean": "rm -rf ./js",
-    "launch": "(cd ./../client/ && npm run build && cd ./../server/) && npm run clean && tsc && node ./js/examples/reply/server/ts/app.js"
+    "launch": "(cd ./../client/ && npm run build && cd ./../server/) && npm run clean && tsc && node ./js/examples/handler/server/ts/app.js"
   },
   "keywords": [],
   "author": "",
