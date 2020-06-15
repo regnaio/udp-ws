@@ -18,6 +18,8 @@
 - `UDPWebSocket`
 - `UDPWebSocketServer`
 
+<br>
+
 Client (resembles [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)):
 ```
 const ws = new UDPWebSocket('ws://localhost:3000');
@@ -51,13 +53,21 @@ In `examples/barebones/server/`, run `npm i` followed by `npm run launch`, and s
 
 <br>
 
-#### 2. `examples/handler/` - Handling WebSocket life cycle, messaging, and events using `WebSocketHandler` and `WebSocketServerHandler`
+#### 2. `examples/handler/` - Handling WebSocket life cycle, messaging, and events using
+- `WebSocketHandler`
+- `WebSocketServerHandler`
+
+<br>
 
 In `examples/handler/server/`, run `npm run launch`.
 
 <br>
 
-#### 3. `examples/binaryHandler/` - Handling WebSocket live cycle, binary messaging, and events using `BinaryWebSocketHandler` and `BinaryWebSocketServerHandler`
+#### 3. `examples/binaryHandler/` - Handling WebSocket live cycle, binary messaging, and events using
+- `BinaryWebSocketHandler`
+- `BinaryWebSocketServerHandler`
+
+<br>
 
 In `examples/binaryHandler/server/`, run `npm run launch`.
 
