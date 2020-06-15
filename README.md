@@ -61,7 +61,26 @@ In `examples/barebones/server/`, run `npm i` followed by `npm run launch`, and s
 
 Client:
 <pre>
-TBD
+(async () => {
+    const webSocketHandler = new WebSocketHandler('ws://localhost:3000', WebSocketType.UDP);
+
+    webSocketHandler.bind('server', data => {
+        console.log(data);
+    });
+
+    try {
+        await webSocketHandler.connect();
+
+        setInterval(() => {
+            webSocketHandler.send({
+                event: 'client',
+                data: {}
+            });
+        }, 1000);
+    } catch (err) {
+        throw err;
+    }
+})();
 </pre>
 
 Server:
@@ -120,7 +139,7 @@ You can then run `npm run launch` in `example/server/`, as mentioned above.
   - `server/`
     - `ts/` contains server-side `UDPWebSocketServer.ts` and `WebSocketServerHandler.ts`
 
-If you want Javascript sources, in `src/`, run `npm run build` to compile TypeScript to Javascript in `src/client/js/` and `src/server/js/`. Feel free to use [webpack](https://webpack.js.org/) or [rollup](https://rollupjs.org/guide/en/) for browser compatibility (on the client side) and minification.
+If you want Javascript sources, in `src/`, run `npm run build` to compile TypeScript to Javascript in `src/client/js/` and `src/server/js/`. Feel free to use [webpack](https://webpack.js.org/) or [rollup](https://rollupjs.org/guide/en/) for browser compatibility (on the client side) and/or minification.
 
 <br>
 
