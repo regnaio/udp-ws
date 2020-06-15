@@ -36,7 +36,7 @@ export class WebSocketServerHandler {
       console.log('User connected');
       const iws = this._type === WebSocketType.TCP ? ws as IDWebSocket : ws as IDUDPWebSocket;
       iws.uuid = count++;
-      console.log(`gws.uuid: ${iws.uuid}`);
+      console.log(`iws.uuid: ${iws.uuid}`);
       
       iws.on('message', data => {
         const packet = JSON.parse(data as string);
@@ -77,9 +77,10 @@ export class BinaryWebSocketServerHandler {
       const iws = this._type === WebSocketType.TCP ? ws as IDWebSocket : ws as IDUDPWebSocket;
       iws.binaryType = 'arraybuffer';
       iws.uuid = count++;
-      console.log(`gws.uuid: ${iws.uuid}`);
+      console.log(`iws.uuid: ${iws.uuid}`);
       
       iws.on('message', data => {
+        console.log('on message data: ', data);
         this.dispatch(iws, data as ArrayBuffer);
       });
     
@@ -91,15 +92,15 @@ export class BinaryWebSocketServerHandler {
 
   bind(event: number, callback: (iws: IDWebSocket, data: ArrayBuffer) => void): void {
     this._callbacks[event] = callback;
-    console.log('callbacks: ', this._callbacks)
   }
 
   send(iws: IDWebSocket | IDUDPWebSocket, packet: ArrayBuffer): void {
+    // console.log('send iws: ', iws);
     iws.send(packet);
   }
 
   dispatch(iws: IDWebSocket | IDUDPWebSocket, packet: ArrayBuffer): void {
     const view = new DataView(packet);
-    this._callbacks[view.getUint8(0)](packet);
+    this._callbacks[view.getUint8(0)](iws, packet);
   }
 }

@@ -16,13 +16,13 @@ webSocketServerHandler.bind(WebSocketEvent.NumberEvent, (iws, data) => {
 	const buffer = new ArrayBuffer(NUM_BYTES_UINT8 + NUM_BYTES_FLOAT64);
 	const view = new DataView(buffer);
 	view.setUint8(0, WebSocketEvent.NumberEvent);
-	view.setFloat64(NUM_BYTES_FLOAT64, 9876.54321);
+	view.setFloat64(NUM_BYTES_UINT8, 9876.54321);
 	webSocketServerHandler.send(iws, buffer);
 });
 
 webSocketServerHandler.bind(WebSocketEvent.StringEvent, (iws, data) => {
 	console.log(data);
-	const buffer = new ArrayBuffer(NUM_BYTES_UINT8 + NUM_BYTES_CHAR * 14);
+	const buffer = new ArrayBuffer(NUM_BYTES_UINT8 + NUM_BYTES_CHAR * 20);
 	const view = new DataView(buffer);
 	view.setUint8(0, WebSocketEvent.StringEvent);
 	writeStringToBuffer('server says hi', buffer, NUM_BYTES_UINT8);

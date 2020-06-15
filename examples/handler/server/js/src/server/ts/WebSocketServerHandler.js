@@ -21,7 +21,7 @@ class WebSocketServerHandler {
             console.log('User connected');
             const iws = this._type === WebSocketType.TCP ? ws : ws;
             iws.uuid = count++;
-            console.log(`gws.uuid: ${iws.uuid}`);
+            console.log(`iws.uuid: ${iws.uuid}`);
             iws.on('message', data => {
                 const packet = JSON.parse(data);
                 this.dispatch(iws, packet);
@@ -55,8 +55,9 @@ class BinaryWebSocketServerHandler {
             const iws = this._type === WebSocketType.TCP ? ws : ws;
             iws.binaryType = 'arraybuffer';
             iws.uuid = count++;
-            console.log(`gws.uuid: ${iws.uuid}`);
+            console.log(`iws.uuid: ${iws.uuid}`);
             iws.on('message', data => {
+                console.log('on message data: ', data);
                 this.dispatch(iws, data);
             });
             iws.on('close', () => {
@@ -66,14 +67,14 @@ class BinaryWebSocketServerHandler {
     }
     bind(event, callback) {
         this._callbacks[event] = callback;
-        console.log('callbacks: ', this._callbacks);
     }
     send(iws, packet) {
+        // console.log('send iws: ', iws);
         iws.send(packet);
     }
     dispatch(iws, packet) {
         const view = new DataView(packet);
-        this._callbacks[view.getUint8(0)](packet);
+        this._callbacks[view.getUint8(0)](iws, packet);
     }
 }
 exports.BinaryWebSocketServerHandler = BinaryWebSocketServerHandler;

@@ -10,7 +10,7 @@ import { WebSocketType, WebSocketHandler } from './../../../../src/client/ts/Web
 
   try {
     await webSocketHandler.connect();
-    
+
     setInterval(() => {
       webSocketHandler.send({
         event: 'client',
