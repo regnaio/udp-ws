@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
 
-import { IDWebSocket, JSONWebSocketServerHandler } from './JSONWebSocketServerHandler';
+import { IDWebSocket, WebSocketServerHandler } from './WebSocketServerHandler';
 import { UDPWebSocket } from './UDPWebSocket';
 
 // Each client has a normal WebSocket for signaling (handshake) and a UDPWebSocket for UDP communication
@@ -15,13 +15,13 @@ export declare interface UDPWebSocketServer {
 }
 
 export class UDPWebSocketServer extends EventEmitter {
-  private _JSONWebSocketServerHandler: JSONWebSocketServerHandler;
+  private _JSONWebSocketServerHandler: WebSocketServerHandler;
 
   clients = clients;
 
   constructor(port: number, private _configuration?: RTCConfiguration) {
     super();
-    this._JSONWebSocketServerHandler = new JSONWebSocketServerHandler(port);
+    this._JSONWebSocketServerHandler = new WebSocketServerHandler(port);
 
     this.bindCallbacks();
   }
@@ -35,7 +35,7 @@ export class UDPWebSocketServer extends EventEmitter {
   }
   // Public API end
 
-  get JSONWebSocketServerHandler(): JSONWebSocketServerHandler {
+  get JSONWebSocketServerHandler(): WebSocketServerHandler {
     return this._JSONWebSocketServerHandler;
   }
 

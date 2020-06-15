@@ -1,4 +1,4 @@
-import { WebSocketType, WebSocketHandler } from './WebSocketHandler';
+import { WebSocketHandler } from './WebSocketHandler';
 
 export class UDPWebSocket {
   private _localPeerConnection: RTCPeerConnection;

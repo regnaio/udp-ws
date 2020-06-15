@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const events_1 = require("events");
-const JSONWebSocketServerHandler_1 = require("./JSONWebSocketServerHandler");
+const WebSocketServerHandler_1 = require("./WebSocketServerHandler");
 const UDPWebSocket_1 = require("./UDPWebSocket");
 // Each client has a normal WebSocket for signaling (handshake) and a UDPWebSocket for UDP communication
 exports.clients = new Map();
@@ -19,7 +19,7 @@ class UDPWebSocketServer extends events_1.EventEmitter {
         super();
         this._configuration = _configuration;
         this.clients = exports.clients;
-        this._JSONWebSocketServerHandler = new JSONWebSocketServerHandler_1.JSONWebSocketServerHandler(port);
+        this._JSONWebSocketServerHandler = new WebSocketServerHandler_1.WebSocketServerHandler(port);
         this.bindCallbacks();
     }
     // Public API start

@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ws_1 = __importDefault(require("ws"));
 // import { v4 as uuidv4 } from 'uuid';
 let count = 0;
-class JSONWebSocketServerHandler {
+class WebSocketServerHandler {
     constructor(port) {
         this._callbacks = new Map();
         this._wss = new ws_1.default.Server({
@@ -41,4 +41,4 @@ class JSONWebSocketServerHandler {
         }
     }
 }
-exports.JSONWebSocketServerHandler = JSONWebSocketServerHandler;
+exports.WebSocketServerHandler = WebSocketServerHandler;

@@ -40,7 +40,7 @@ export class UDPWebSocket extends EventEmitter {
       maxRetransmits: 0
     };
     this._dataChannel = this._localPeerConnection.createDataChannel('dataChannel', dataChannelConfig);
-    this._dataChannel.binaryType = 'arraybuffer';
+    // this._dataChannel.binaryType = 'arraybuffer';
 
     this._dataChannel.onopen = (ev: Event) => {
       console.log(`onopen readyState: ${this._dataChannel.readyState}`);

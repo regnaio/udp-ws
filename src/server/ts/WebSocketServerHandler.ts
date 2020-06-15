@@ -7,12 +7,12 @@ export interface IDWebSocket extends WebSocket {
   uuid: number
 }
 
-interface JSONWebSocketPacket {
+interface JSONPacket {
   event: string,
   data: object
 }
 
-export class JSONWebSocketServerHandler {
+export class WebSocketServerHandler {
   private _wss: WebSocket.Server;
   private _callbacks = new Map<string, Function>();
   
@@ -43,12 +43,12 @@ export class JSONWebSocketServerHandler {
     this._callbacks.set(event, callback);
   }
 
-  send(iws: IDWebSocket, packet: JSONWebSocketPacket): void {
+  send(iws: IDWebSocket, packet: JSONPacket): void {
     const payload = JSON.stringify(packet);
     iws.send(payload);
   }
 
-  dispatch(iws: IDWebSocket, packet: JSONWebSocketPacket): void {
+  dispatch(iws: IDWebSocket, packet: JSONPacket): void {
     const callback = this._callbacks.get(packet.event);
     if (callback !== undefined) {
       callback(iws, packet.data);
