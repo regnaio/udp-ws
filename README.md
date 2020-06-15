@@ -12,7 +12,7 @@ udp-ws is inspired by and includes code snippets from [geckos.io](https://github
 
 ## Examples
 
-#### `examples/barebones/` - A barebones example of UDPWebSocket
+#### `examples/barebones/` - A barebones example of `UDPWebSocket`
 Client (resembles [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)):
 ```
 const ws = new UDPWebSocket('ws://localhost:3000');
