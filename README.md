@@ -21,8 +21,8 @@
 <br>
 
 Client (resembles [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)):
-```
-const ws = new UDPWebSocket('ws://localhost:3000');
+<pre>
+const ws = new <b>UDPWebSocket</b>('ws://localhost:3000');
 
 ws.onmessage = ev => {
     console.log(ev.data);
@@ -33,11 +33,11 @@ setInterval(() => {
         ws.send('client says hi');
     }
 }, 1000);
-```
+</pre>
 
 Server (resembles [ws](https://www.npmjs.com/package/ws)):
-```
-const wss = new UDPWebSocketServer(3000);
+<pre>
+const wss = new <b>UDPWebSocketServer</b>(3000);
 
 wss.on('connection', ws => {
     ws.on('message', data => {
@@ -47,7 +47,7 @@ wss.on('connection', ws => {
         }
     });
 });
-```
+</pre>
 
 In `examples/barebones/server/`, run `npm i` followed by `npm run launch`, and see the client-server example running in [localhost](http://localhost/). Observe the output in your console log (e.g. using `Ctrl` + `Shift` + `I` in Windows Chrome).
 
