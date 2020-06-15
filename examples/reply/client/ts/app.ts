@@ -1,5 +1,4 @@
 import { UDPWebSocket } from './../../../../src/client/ts/UDPWebSocket';
-import { WebSocketHandler } from './../../../../src/client/ts/WebSocketHandler';
 
 const ws = new UDPWebSocket('ws://localhost:3000');
 // const ws = new UDPWebSocket('ws://13.59.33.46:3000');

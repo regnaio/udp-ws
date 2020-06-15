@@ -1,0 +1,22 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "(cd ./../client/ && npm i) && (cd ./../../src/client/ && npm i) && (cd ./../server/ && npm i)",
+    "clean": "rm -rf ./js",
+    "launch": "(cd ./../client/ && npm run build && cd ./../server/) && npm run clean && tsc && node ./js/examples/binaryHandler/server/ts/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "wrtc": "^0.4.5",
+    "ws": "^7.3.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.6"
+  }
+}

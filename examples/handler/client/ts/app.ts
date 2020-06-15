@@ -1,4 +1,3 @@
-import { UDPWebSocket } from './../../../../src/client/ts/UDPWebSocket';
 import { WebSocketType, WebSocketHandler } from './../../../../src/client/ts/WebSocketHandler';
 
 (async () => {

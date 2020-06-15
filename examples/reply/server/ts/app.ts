@@ -2,7 +2,6 @@ import express from 'express';
 const app = express();
 
 import { UDPWebSocketServer } from './../../../../src/server/ts/UDPWebSocketServer';
-import { WebSocketServerHandler } from './../../../../src/server/ts/WebSocketServerHandler';
 
 const wss = new UDPWebSocketServer(3000);
 

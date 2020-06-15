@@ -91,6 +91,7 @@ export class BinaryWebSocketServerHandler {
 
   bind(event: number, callback: (iws: IDWebSocket, data: ArrayBuffer) => void): void {
     this._callbacks[event] = callback;
+    console.log('callbacks: ', this._callbacks)
   }
 
   send(iws: IDWebSocket | IDUDPWebSocket, packet: ArrayBuffer): void {
