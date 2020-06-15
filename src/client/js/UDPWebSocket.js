@@ -12,10 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const WebSocketHandler_1 = require("./WebSocketHandler");
 class UDPWebSocket {
     constructor(url, configuration) {
-        this.onopen = null;
-        this.onmessage = null;
-        this.onerror = null;
-        this.onclose = null;
+        this.onopen = ev => { };
+        this.onmessage = ev => { };
+        this.onerror = ev => { };
+        this.onclose = ev => { };
         this._webSocketHandler = new WebSocketHandler_1.WebSocketHandler(url);
         this.bindCallbacks();
         this.startSignaling();
@@ -41,12 +41,10 @@ class UDPWebSocket {
             throw `this._dataChannel === undefined`;
         this._dataChannel.binaryType = binaryType;
     }
-    // send(data: string | Blob | ArrayBuffer | ArrayBufferView) {
     send(data) {
         if (this._dataChannel === undefined) {
             throw `send this._dataChannel === undefined`;
         }
-        console.log('send data: ', data);
         this._dataChannel.send(data);
     }
     close() {
@@ -94,28 +92,20 @@ class UDPWebSocket {
             console.log('this._dataChannel.onopen this: ', this);
             console.log(`onopen readyState: ${this._dataChannel.readyState}`);
             console.log('onopen ev: ', ev);
-            if (this.onopen !== null) {
-                this.onopen(ev);
-            }
+            this.onopen(ev);
             this._dataChannel.onmessage = (ev) => {
                 console.log('onmessage ev: ', ev);
-                if (this.onmessage !== null) {
-                    this.onmessage(ev);
-                }
+                this.onmessage(ev);
             };
         };
         this._dataChannel.onerror = (ev) => {
             console.log('onerror ev: ', ev);
-            if (this.onerror !== null) {
-                this.onerror(ev);
-            }
+            this.onerror(ev);
         };
         this._dataChannel.onclose = (ev) => {
             console.log(`onclose readyState: ${this._dataChannel.readyState}`);
             console.log('onclose ev: ', ev);
-            if (this.onclose !== null) {
-                this.onclose(ev);
-            }
+            this.onclose(ev);
         };
     }
 }
