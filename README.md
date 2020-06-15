@@ -14,7 +14,10 @@
 
 ## Examples
 
-#### 1. `examples/barebones/` - A barebones example of `UDPWebSocket`
+#### 1. `examples/barebones/` - Barebones example of
+- `UDPWebSocket`
+-`UDPWebSocketServer`
+
 Client (resembles [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)):
 ```
 const ws = new UDPWebSocket('ws://localhost:3000');
