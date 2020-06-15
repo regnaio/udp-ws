@@ -69,6 +69,10 @@ export class UDPWebSocket extends EventEmitter {
   }
 
   // Public API start
+  get readyState(): RTCDataChannelState {
+    return this._dataChannel.readyState;
+  }
+
   set binaryType(binaryType: string) {
     if (binaryType !== 'blob' && binaryType !== 'arraybuffer') throw `binaryType ${binaryType} does not exist!`;
     this._dataChannel.binaryType = binaryType;

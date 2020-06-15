@@ -7,6 +7,7 @@ var WebSocketType;
     WebSocketType[WebSocketType["TCP"] = 0] = "TCP";
     WebSocketType[WebSocketType["UDP"] = 1] = "UDP"; // UDPWebSocket
 })(WebSocketType = exports.WebSocketType || (exports.WebSocketType = {}));
+// Handles WebSocket or UDPWebSocket with JSON packets
 class WebSocketHandler {
     constructor(_url, _type = WebSocketType.TCP) {
         this._url = _url;
@@ -16,7 +17,6 @@ class WebSocketHandler {
     }
     connect() {
         return new Promise((resolve, reject) => {
-            // this._ws = this._type === WebSocketType.TCP ? new WebSocket(this._url) : new UDPWebSocket(this._url);
             this._ws.onmessage = ev => {
                 const packet = JSON.parse(ev.data);
                 this.dispatch(packet);
@@ -38,8 +38,6 @@ class WebSocketHandler {
         this._callbacks.set(event, callback);
     }
     send(packet) {
-        if (this._ws === undefined)
-            throw 'WebSocket is undefined!';
         this._ws.send(JSON.stringify(packet));
     }
     dispatch(packet) {
@@ -50,6 +48,7 @@ class WebSocketHandler {
     }
 }
 exports.WebSocketHandler = WebSocketHandler;
+// Handles WebSocket or UDPWebSocket with ArrayBuffer packets
 class BinaryWebSocketHandler {
     constructor(_url, _type = WebSocketType.TCP) {
         this._url = _url;
@@ -60,8 +59,6 @@ class BinaryWebSocketHandler {
     }
     connect() {
         return new Promise((resolve, reject) => {
-            // this._ws = this._type === WebSocketType.TCP ? new WebSocket(this._url) : new UDPWebSocket(this._url);
-            // this._ws.binaryType = 'arraybuffer';
             this._ws.onmessage = ev => {
                 this.dispatch(ev.data);
             };
@@ -82,8 +79,6 @@ class BinaryWebSocketHandler {
         this._callbacks[event] = callback;
     }
     send(packet) {
-        if (this._ws === undefined)
-            throw 'WebSocket is undefined!';
         this._ws.send(packet);
     }
     dispatch(packet) {

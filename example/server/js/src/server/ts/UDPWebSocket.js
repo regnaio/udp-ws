@@ -47,6 +47,9 @@ class UDPWebSocket extends events_1.EventEmitter {
         };
     }
     // Public API start
+    get readyState() {
+        return this._dataChannel.readyState;
+    }
     set binaryType(binaryType) {
         if (binaryType !== 'blob' && binaryType !== 'arraybuffer')
             throw `binaryType ${binaryType} does not exist!`;

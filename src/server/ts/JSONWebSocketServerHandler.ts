@@ -1,6 +1,8 @@
 import WebSocket from 'ws';
 // import { v4 as uuidv4 } from 'uuid';
 
+let count = 0;
+
 export interface IDWebSocket extends WebSocket {
   uuid: number
 }
@@ -13,7 +15,6 @@ interface JSONWebSocketPacket {
 export class JSONWebSocketServerHandler {
   private _wss: WebSocket.Server;
   private _callbacks = new Map<string, Function>();
-  private _id = 0;
   
   constructor(port: number) {
     this._wss = new WebSocket.Server({
@@ -24,8 +25,7 @@ export class JSONWebSocketServerHandler {
       console.log(`User connected (IP: ${req.connection.remoteAddress}).`);
       const iws = ws as IDWebSocket;
       iws.binaryType = 'arraybuffer';
-      iws.uuid = this._id;
-      this._id++;
+      iws.uuid = count++;
       console.log(`gws.uuid: ${iws.uuid}`);
       
       iws.on('message', msg => {

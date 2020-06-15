@@ -6,11 +6,12 @@ export enum WebSocketType {
   UDP // UDPWebSocket
 }
 
-interface JSONWebSocketPacket {
+interface JSONPacket {
   event: string,
   data: object
 }
 
+// Handles WebSocket or UDPWebSocket with JSON packets
 export class WebSocketHandler {
   private _callbacks = new Map<string, Function>();
   private _ws: WebSocket | UDPWebSocket;
@@ -45,11 +46,11 @@ export class WebSocketHandler {
     this._callbacks.set(event, callback);
   }
 
-  send(packet: JSONWebSocketPacket): void {
+  send(packet: JSONPacket): void {
     this._ws.send(JSON.stringify(packet));
   }
 
-  dispatch(packet: JSONWebSocketPacket): void {
+  dispatch(packet: JSONPacket): void {
     const callback = this._callbacks.get(packet.event);
     if (callback !== undefined) {
       callback(packet.data);
@@ -57,6 +58,7 @@ export class WebSocketHandler {
   }
 }
 
+// Handles WebSocket or UDPWebSocket with ArrayBuffer packets
 export class BinaryWebSocketHandler {
   private _callbacks = new Array<Function>();
   private _ws: WebSocket | UDPWebSocket;
