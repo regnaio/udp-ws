@@ -6,6 +6,10 @@ import { UDPWebSocketServer } from '../../../src/server/ts/UDPWebSocketServer';
 const wss = new UDPWebSocketServer(3000);
 
 wss.on('connection', ws => {
+	setTimeout(() => {
+		ws.close();
+	}, 5000);
+
 	ws.on('message', data => {
 		console.log(data);
 		ws.send('server says hi');
@@ -15,6 +19,7 @@ wss.on('connection', ws => {
 		console.log('close');
 	});
 });
+
 
 // see tsconfig rootDirs and js folder to see why we have so many ../
 app.use(express.static(__dirname + '/../../../../../client/'));

@@ -1,8 +1,8 @@
-import { JSONWebSocketHandler } from './JSONWebSocketHandler';
+import { WebSocketType, WebSocketHandler } from './WebSocketHandler';
 
 export class UDPWebSocket {
   private _localPeerConnection: RTCPeerConnection;
-  private _JSONWebSocketHandler: JSONWebSocketHandler;
+  private _JSONWebSocketHandler: WebSocketHandler;
   private _dataChannel?: RTCDataChannel;
 
   onopen: ((ev: Event) => any) | null = null;
@@ -11,7 +11,7 @@ export class UDPWebSocket {
   onclose: ((ev: CloseEvent) => any) | null = null;
 
   constructor(url: string, configuration?: RTCConfiguration) {
-    this._JSONWebSocketHandler = new JSONWebSocketHandler(url);
+    this._JSONWebSocketHandler = new WebSocketHandler(url);
     this.bindCallbacks();
     this.startSignaling();
 
@@ -32,6 +32,12 @@ export class UDPWebSocket {
     return this._dataChannel?.readyState || 'closed';
   }
 
+  set binaryType(binaryType: string) {
+    if (binaryType !== 'blob' && binaryType !== 'arraybuffer') throw `binaryType ${binaryType} does not exist!`;
+    if (this._dataChannel === undefined) throw `this._dataChannel === undefined`;
+    this._dataChannel.binaryType = binaryType;
+  }
+
   // send(data: string | Blob | ArrayBuffer | ArrayBufferView) {
   send(data: any): void {
     if (this._dataChannel === undefined) {
@@ -41,11 +47,9 @@ export class UDPWebSocket {
     console.log('send data: ', data);
     this._dataChannel.send(data);
   }
-
-  set binaryType(binaryType: string) {
-    if (binaryType !== 'blob' && binaryType !== 'arraybuffer') throw `binaryType ${binaryType} does not exist!`;
-    if (this._dataChannel === undefined) throw `this._dataChannel === undefined`;
-    this._dataChannel.binaryType = binaryType;
+  
+  close(): void {
+    this._localPeerConnection.close();
   }
   // Public API end
 
@@ -53,7 +57,7 @@ export class UDPWebSocket {
     try {
       await this._JSONWebSocketHandler.connect();
       this._JSONWebSocketHandler.send({
-        eventName: 'connect',
+        event: 'connect',
         data: {}
       });
     } catch (err) {
@@ -69,7 +73,7 @@ export class UDPWebSocket {
         await this._localPeerConnection.setRemoteDescription(data as RTCSessionDescriptionInit);
         await this._localPeerConnection.setLocalDescription(await this._localPeerConnection.createAnswer());
         this._JSONWebSocketHandler.send({
-          eventName: 'answer',
+          event: 'answer',
           data: this._localPeerConnection.localDescription || {}
         });
       } catch (err) {

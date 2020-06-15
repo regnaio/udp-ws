@@ -6,7 +6,7 @@ export interface IDWebSocket extends WebSocket {
 }
 
 interface JSONWebSocketPacket {
-  eventName: string,
+  event: string,
   data: object
 }
 
@@ -39,8 +39,8 @@ export class JSONWebSocketServerHandler {
     });
   }
 
-  bind(eventName: string, callback: (iws: IDWebSocket, data: object) => void): void {
-    this._callbacks.set(eventName, callback);
+  bind(event: string, callback: (iws: IDWebSocket, data: object) => void): void {
+    this._callbacks.set(event, callback);
   }
 
   send(iws: IDWebSocket, packet: JSONWebSocketPacket): void {
@@ -49,7 +49,7 @@ export class JSONWebSocketServerHandler {
   }
 
   dispatch(iws: IDWebSocket, packet: JSONWebSocketPacket): void {
-    const callback = this._callbacks.get(packet.eventName);
+    const callback = this._callbacks.get(packet.event);
     if (callback !== undefined) {
       callback(iws, packet.data);
     }

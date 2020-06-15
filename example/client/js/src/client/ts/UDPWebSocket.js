@@ -9,14 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const JSONWebSocketHandler_1 = require("./JSONWebSocketHandler");
+const WebSocketHandler_1 = require("./WebSocketHandler");
 class UDPWebSocket {
     constructor(url, configuration) {
         this.onopen = null;
         this.onmessage = null;
         this.onerror = null;
         this.onclose = null;
-        this._JSONWebSocketHandler = new JSONWebSocketHandler_1.JSONWebSocketHandler(url);
+        this._JSONWebSocketHandler = new WebSocketHandler_1.WebSocketHandler(url);
         this.bindCallbacks();
         this.startSignaling();
         if (configuration === undefined) {
@@ -34,6 +34,13 @@ class UDPWebSocket {
         var _a;
         return ((_a = this._dataChannel) === null || _a === void 0 ? void 0 : _a.readyState) || 'closed';
     }
+    set binaryType(binaryType) {
+        if (binaryType !== 'blob' && binaryType !== 'arraybuffer')
+            throw `binaryType ${binaryType} does not exist!`;
+        if (this._dataChannel === undefined)
+            throw `this._dataChannel === undefined`;
+        this._dataChannel.binaryType = binaryType;
+    }
     // send(data: string | Blob | ArrayBuffer | ArrayBufferView) {
     send(data) {
         if (this._dataChannel === undefined) {
@@ -42,12 +49,8 @@ class UDPWebSocket {
         console.log('send data: ', data);
         this._dataChannel.send(data);
     }
-    set binaryType(binaryType) {
-        if (binaryType !== 'blob' && binaryType !== 'arraybuffer')
-            throw `binaryType ${binaryType} does not exist!`;
-        if (this._dataChannel === undefined)
-            throw `this._dataChannel === undefined`;
-        this._dataChannel.binaryType = binaryType;
+    close() {
+        this._localPeerConnection.close();
     }
     // Public API end
     startSignaling() {
@@ -55,7 +58,7 @@ class UDPWebSocket {
             try {
                 yield this._JSONWebSocketHandler.connect();
                 this._JSONWebSocketHandler.send({
-                    eventName: 'connect',
+                    event: 'connect',
                     data: {}
                 });
             }
@@ -71,7 +74,7 @@ class UDPWebSocket {
                 yield this._localPeerConnection.setRemoteDescription(data);
                 yield this._localPeerConnection.setLocalDescription(yield this._localPeerConnection.createAnswer());
                 this._JSONWebSocketHandler.send({
-                    eventName: 'answer',
+                    event: 'answer',
                     data: this._localPeerConnection.localDescription || {}
                 });
             }

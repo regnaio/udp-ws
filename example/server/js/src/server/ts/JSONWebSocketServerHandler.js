@@ -27,15 +27,15 @@ class JSONWebSocketServerHandler {
             });
         });
     }
-    bind(eventName, callback) {
-        this._callbacks.set(eventName, callback);
+    bind(event, callback) {
+        this._callbacks.set(event, callback);
     }
     send(iws, packet) {
         const payload = JSON.stringify(packet);
         iws.send(payload);
     }
     dispatch(iws, packet) {
-        const callback = this._callbacks.get(packet.eventName);
+        const callback = this._callbacks.get(packet.event);
         if (callback !== undefined) {
             callback(iws, packet.data);
         }

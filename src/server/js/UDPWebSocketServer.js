@@ -48,7 +48,7 @@ class UDPWebSocketServer extends events_1.EventEmitter {
             try {
                 yield client.localPeerConnection.setLocalDescription(yield client.localPeerConnection.createOffer());
                 this._JSONWebSocketServerHandler.send(iws, {
-                    eventName: 'offer',
+                    event: 'offer',
                     data: client.localPeerConnection.localDescription || {}
                 });
             }

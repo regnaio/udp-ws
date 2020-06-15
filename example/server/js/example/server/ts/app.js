@@ -8,6 +8,9 @@ const app = express_1.default();
 const UDPWebSocketServer_1 = require("../../../src/server/ts/UDPWebSocketServer");
 const wss = new UDPWebSocketServer_1.UDPWebSocketServer(3000);
 wss.on('connection', ws => {
+    setTimeout(() => {
+        ws.close();
+    }, 5000);
     ws.on('message', data => {
         console.log(data);
         ws.send('server says hi');

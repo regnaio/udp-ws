@@ -69,14 +69,19 @@ export class UDPWebSocket extends EventEmitter {
   }
 
   // Public API start
+  set binaryType(binaryType: string) {
+    if (binaryType !== 'blob' && binaryType !== 'arraybuffer') throw `binaryType ${binaryType} does not exist!`;
+    this._dataChannel.binaryType = binaryType;
+  }
+
   send(data: any) {
     console.log('send data: ', data);
     this._dataChannel.send(data);
   }
 
-  set binaryType(binaryType: string) {
-    if (binaryType !== 'blob' && binaryType !== 'arraybuffer') throw `binaryType ${binaryType} does not exist!`;
-    this._dataChannel.binaryType = binaryType;
+  close(): void {
+    // this._dataChannel.close();
+    this._localPeerConnection.close();
   }
   // Public API end
 
@@ -97,7 +102,7 @@ export class UDPWebSocket extends EventEmitter {
     }
 
     this._UDPWebSocketServer.JSONWebSocketServerHandler.send(iws, {
-      eventName: 'icecandidate',
+      event: 'icecandidate',
       data: event.candidate || {}
     });
   }

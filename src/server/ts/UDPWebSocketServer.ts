@@ -56,7 +56,7 @@ export class UDPWebSocketServer extends EventEmitter {
         await client.localPeerConnection.setLocalDescription(await client.localPeerConnection.createOffer());
 
         this._JSONWebSocketServerHandler.send(iws, {
-          eventName: 'offer',
+          event: 'offer',
           data: client.localPeerConnection.localDescription || {}
         });
       } catch (err) {

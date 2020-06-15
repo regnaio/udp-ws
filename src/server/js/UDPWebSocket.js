@@ -47,14 +47,18 @@ class UDPWebSocket extends events_1.EventEmitter {
         };
     }
     // Public API start
-    send(data) {
-        console.log('send data: ', data);
-        this._dataChannel.send(data);
-    }
     set binaryType(binaryType) {
         if (binaryType !== 'blob' && binaryType !== 'arraybuffer')
             throw `binaryType ${binaryType} does not exist!`;
         this._dataChannel.binaryType = binaryType;
+    }
+    send(data) {
+        console.log('send data: ', data);
+        this._dataChannel.send(data);
+    }
+    close() {
+        // this._dataChannel.close();
+        this._localPeerConnection.close();
     }
     // Public API end
     get localPeerConnection() {
@@ -72,7 +76,7 @@ class UDPWebSocket extends events_1.EventEmitter {
             throw `onIceCandidate iws === undefined`;
         }
         this._UDPWebSocketServer.JSONWebSocketServerHandler.send(iws, {
-            eventName: 'icecandidate',
+            event: 'icecandidate',
             data: event.candidate || {}
         });
     }
