@@ -100,19 +100,13 @@ In `examples/handler/server/`, run `npm i` followed by `npm run launch`.
 
 <br>
 
-#### 3. `examples/binaryHandler/` - Handling WebSocket live cycle, binary messaging, and events using
+#### 3. `examples/binaryHandler/` - Handling WebSocket life cycle, binary messaging, and events using
 - `BinaryWebSocketHandler`
 - `BinaryWebSocketServerHandler`
 
-<br>
+Structure of packet: ArrayBuffer with leading Uint8 representing the event followed by an arbitrary number of bytes representing the data
 
-----------
-|
-| Uint8
-| 
-|
-|
-----------
+<br>
 
 Client:
 <pre>
