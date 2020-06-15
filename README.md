@@ -6,9 +6,11 @@
 
 [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket) is built on TCP. UDP is much preferred over TCP for networking in realtime multiplayer games. Refer to the awesome visualizations in [Gaffer On Games: Deterministic Lockstep](https://gafferongames.com/post/deterministic_lockstep/) to see why.
 
-udp-ws is built on [WebRTC](https://webrtc.org/), which allows peer-to-peer UDP communication in the browser. However, udp-ws is designed for client-server communication (e.g. for server-authoritative browser games), not for peer-to-peer communication. udp-ws accomplishes this by treating your server as a peer.
+<em>udp-ws</em> is built on [WebRTC](https://webrtc.org/), which allows peer-to-peer UDP communication in the browser. However, <em>udp-ws</em> is designed for client-server communication (e.g. for server-authoritative browser games), not for peer-to-peer communication. <em>udp-ws</em> accomplishes this by treating your server as a peer.
 
-udp-ws is inspired by and includes code snippets from [geckos.io](https://github.com/geckosio/geckos.io) by [yandeu](https://github.com/yandeu) and [node-webrtc-examples](https://github.com/node-webrtc/node-webrtc-examples).
+<em>udp-ws</em> is inspired by and includes code snippets from [geckos.io](https://github.com/geckosio/geckos.io) by [yandeu](https://github.com/yandeu) and [node-webrtc-examples](https://github.com/node-webrtc/node-webrtc-examples).
+
+<br>
 
 ## Examples
 
@@ -52,6 +54,8 @@ In `examples/handler/server/`, run `npm run launch`.
 
 In `examples/binaryHandler/server/`, run `npm run launch`.
 
+<br>
+
 ## Prerequisites
 
 - Install `node` and `npm`
@@ -65,6 +69,8 @@ In `examples/binaryHandler/server/`, run `npm run launch`.
 Run `npm i` in `examples/barebones/server/` to install all npm packages for all required folders (via [postinstall](https://docs.npmjs.com/misc/scripts)).
 
 You can then run `npm run launch` in `example/server/`, as mentioned above.
+
+<br>
 
 ## Repository Structure
 
