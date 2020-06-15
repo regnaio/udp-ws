@@ -14,7 +14,7 @@
 
 ## Examples
 
-#### `examples/barebones/` - A barebones example of `UDPWebSocket`
+#### 1. `examples/barebones/` - A barebones example of `UDPWebSocket`
 Client (resembles [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)):
 ```
 const ws = new UDPWebSocket('ws://localhost:3000');
@@ -46,11 +46,15 @@ wss.on('connection', ws => {
 
 In `examples/barebones/server/`, run `npm i` followed by `npm run launch`, and see the client-server example running in [localhost](http://localhost/). Observe the output in your console log (e.g. using `Ctrl` + `Shift` + `I` in Windows Chrome).
 
-#### `examples/handler/` - Handling WebSocket life cycle, messaging, and events using `WebSocketHandler` and `WebSocketServerHandler`
+<br>
+
+#### 2. `examples/handler/` - Handling WebSocket life cycle, messaging, and events using `WebSocketHandler` and `WebSocketServerHandler`
 
 In `examples/handler/server/`, run `npm run launch`.
 
-#### `examples/binaryHandler/` - Handling WebSocket live cycle, binary messaging, and events using `BinaryWebSocketHandler` and `BinaryWebSocketServerHandler`
+<br>
+
+#### 3. `examples/binaryHandler/` - Handling WebSocket live cycle, binary messaging, and events using `BinaryWebSocketHandler` and `BinaryWebSocketServerHandler`
 
 In `examples/binaryHandler/server/`, run `npm run launch`.
 
