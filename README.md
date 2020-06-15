@@ -106,6 +106,14 @@ In `examples/handler/server/`, run `npm i` followed by `npm run launch`.
 
 <br>
 
+----------
+|
+| Uint8
+| 
+|
+|
+----------
+
 Client:
 <pre>
 import { NUM_BYTES_UINT8, NUM_BYTES_FLOAT64, NUM_BYTES_CHAR, writeStringToBuffer, bufferToString } from './binaryTools';
