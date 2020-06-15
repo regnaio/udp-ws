@@ -44,11 +44,11 @@ wss.on('connection', ws => {
 
 In `examples/barebones/server/`, run `npm run launch`, and see the client-server example running in [localhost](http://localhost/). Open your console log using `Ctrl` + `Shift` + `I`.
 
-#### `examples/handler/`
+#### `examples/handler/` - Handling WebSocket life cycle, messaging, and events using `WebSocketHandler` and `WebSocketServerHandler`
 
 In `examples/handler/server/`, run `npm run launch`.
 
-#### `examples/binaryHandler/`
+#### `examples/binaryHandler/` - Handling WebSocket live cycle, binary messaging, and events using `BinaryWebSocketHandler` and `BinaryWebSocketServerHandler`
 
 In `examples/binaryHandler/server/`, run `npm run launch`.
 
@@ -79,7 +79,7 @@ If you want Javascript sources, in `src/`, run `npm run build` to compile TypeSc
 
 #### `examples/` contains examples using the library source code
 - `examples/`
-  - `reply/`
+  - `barebones/`
     - `client/`
       - `ts/` contains client-side example using `UDPWebSocket.ts`
     - `server/`
