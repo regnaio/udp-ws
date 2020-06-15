@@ -59,7 +59,7 @@ In `examples/barebones/server/`, run `npm i` followed by `npm run launch`, and s
 
 <br>
 
-In `examples/handler/server/`, run `npm run launch`.
+In `examples/handler/server/`, run `npm i` followed by `npm run launch`.
 
 <br>
 
@@ -69,7 +69,7 @@ In `examples/handler/server/`, run `npm run launch`.
 
 <br>
 
-In `examples/binaryHandler/server/`, run `npm run launch`.
+In `examples/binaryHandler/server/`, run `npm i` followed by `npm run launch`.
 
 <br>
 
@@ -104,19 +104,19 @@ If you want Javascript sources, in `src/`, run `npm run build` to compile TypeSc
 - `examples/`
   - `barebones/`
     - `client/`
-      - `ts/` contains client-side example using `UDPWebSocket.ts`
+      - `ts/` contains a client-side example using `UDPWebSocket.ts`
     - `server/`
-      - `ts/` contains server-side example using `UDPWebSocketServer.ts`
+      - `ts/` contains a server-side example using `UDPWebSocketServer.ts`
   - `handler/`
     - `client/`
-      - `ts/`
+      - `ts/` contains a client-side example using `WebSocketHandler.ts`
     - `server/`
-      - `ts/`
+      - `ts/` contains a server-side example using `WebSocketServerHandler.ts`
   - `binaryHandler/`
     - `client/`
-      - `ts/`
+      - `ts/` contains a client-side example using `BinaryWebSocketHandler.ts`
     - `server/`
-      - `ts/`
+      - `ts/` contains a server-side example using `BinaryWebSocketServerHandler.ts`
 
 <br>
 
