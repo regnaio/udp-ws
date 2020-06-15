@@ -71,9 +71,9 @@ You can then run `npm run launch` in `example/server/`, as mentioned above.
 #### `src/` contains the library source code
 - `src/`
   - `client/`
-    - `ts/` contains client-side `UDPWebSocket.ts`
+    - `ts/` contains client-side `UDPWebSocket.ts` and `WebSocketHandler.ts`
   - `server/`
-    - `ts/` contains server-side `UDPWebSocketServer.ts`
+    - `ts/` contains server-side `UDPWebSocketServer.ts` and `WebSocketServerHandler.ts`
 
 If you want Javascript sources, in `src/`, run `npm run build` to compile TypeScript to Javascript in `src/client/js/` and `src/server/js/`. Feel free to use [webpack](https://webpack.js.org/) or [rollup](https://rollupjs.org/guide/en/) for browser compatibility (on the client side) and minification.
 
@@ -84,6 +84,16 @@ If you want Javascript sources, in `src/`, run `npm run build` to compile TypeSc
       - `ts/` contains client-side example using `UDPWebSocket.ts`
     - `server/`
       - `ts/` contains server-side example using `UDPWebSocketServer.ts`
+  - `handler/`
+    - `client/`
+      - `ts/`
+    - `server/`
+      - `ts/`
+  - `binaryHandler/`
+    - `client/`
+      - `ts/`
+    - `server/`
+      - `ts/`
 
 In `examples/barebones/server/`, run `npm run launch` to run the client-server example, as mentioned above. Note that [webpack](https://webpack.js.org/) is used on the client side for browser compatibility.
 
