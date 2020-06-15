@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "(cd ./../client/ && npm i) && (cd ./../../src/client/ && npm i) && (cd ./../server/ && npm i)",
     "clean": "rm -rf ./js",
-    "launch": "(cd ./../client/ && npm run build && cd ./../server/) && npm run clean && tsc && node ./js/examples/barebone/server/ts/app.js"
+    "launch": "(cd ./../client/ && npm run build && cd ./../server/) && npm run clean && tsc && node ./js/examples/barebones/server/ts/app.js"
   },
   "keywords": [],
   "author": "",

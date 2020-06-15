@@ -81,20 +81,20 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./js/examples/barebone/client/ts/app.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./js/examples/barebones/client/ts/app.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./js/examples/barebone/client/ts/app.js":
-/*!***********************************************!*\
-  !*** ./js/examples/barebone/client/ts/app.js ***!
-  \***********************************************/
+/***/ "./js/examples/barebones/client/ts/app.js":
+/*!************************************************!*\
+  !*** ./js/examples/barebones/client/ts/app.js ***!
+  \************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nconst UDPWebSocket_1 = __webpack_require__(/*! ./../../../../src/client/ts/UDPWebSocket */ \"./js/src/client/ts/UDPWebSocket.js\");\r\nconst ws = new UDPWebSocket_1.UDPWebSocket('ws://localhost:3000');\r\n// const ws = new UDPWebSocket('ws://13.59.33.46:3000');\r\nws.onopen = ev => {\r\n    console.log('open ev', ev);\r\n    ws.binaryType = 'arraybuffer';\r\n};\r\nws.onmessage = ev => {\r\n    console.log('onmessage ev.data: ', ev.data);\r\n};\r\nws.onerror = ev => {\r\n    console.log('onerror ev: ', ev);\r\n};\r\nws.onclose = ev => {\r\n    console.log('close ev', ev);\r\n};\r\nsetInterval(() => {\r\n    if (ws.readyState === 'open') {\r\n        ws.send('client says hi');\r\n    }\r\n}, 1000);\r\n\n\n//# sourceURL=webpack:///./js/examples/barebone/client/ts/app.js?");
+eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nconst UDPWebSocket_1 = __webpack_require__(/*! ./../../../../src/client/ts/UDPWebSocket */ \"./js/src/client/ts/UDPWebSocket.js\");\r\nconst ws = new UDPWebSocket_1.UDPWebSocket('ws://localhost:3000');\r\n// const ws = new UDPWebSocket('ws://13.59.33.46:3000');\r\nws.onopen = ev => {\r\n    console.log('open ev', ev);\r\n    ws.binaryType = 'arraybuffer';\r\n};\r\nws.onmessage = ev => {\r\n    console.log('onmessage ev.data: ', ev.data);\r\n};\r\nws.onerror = ev => {\r\n    console.log('onerror ev: ', ev);\r\n};\r\nws.onclose = ev => {\r\n    console.log('close ev', ev);\r\n};\r\nsetInterval(() => {\r\n    if (ws.readyState === 'open') {\r\n        ws.send('client says hi');\r\n    }\r\n}, 1000);\r\n\n\n//# sourceURL=webpack:///./js/examples/barebones/client/ts/app.js?");
 
 /***/ }),
 
