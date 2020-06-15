@@ -76,7 +76,7 @@ If you want Javascript sources, in `src/`, run `npm run build` to compile TypeSc
     - `server/`
       - `ts/` contains server-side example using `UDPWebSocketServer.ts`
 
-In `examples/reply/server/`, run `npm run launch` to run the client-server example, as mentioned above. Note that [webpack](https://webpack.js.org/) is used on the client side for browser compatibility.
+In `examples/barebone/server/`, run `npm run launch` to run the client-server example, as mentioned above. Note that [webpack](https://webpack.js.org/) is used on the client side for browser compatibility.
 
 <br>
 
