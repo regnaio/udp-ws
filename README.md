@@ -59,6 +59,16 @@ In `examples/barebones/server/`, run `npm i` followed by `npm run launch`, and s
 
 <br>
 
+Client:
+<pre>
+TBD
+</pre>
+
+Server:
+<pre>
+TBD
+</pre>
+
 In `examples/handler/server/`, run `npm i` followed by `npm run launch`.
 
 <br>
@@ -66,6 +76,18 @@ In `examples/handler/server/`, run `npm i` followed by `npm run launch`.
 #### 3. `examples/binaryHandler/` - Handling WebSocket live cycle, binary messaging, and events using
 - `BinaryWebSocketHandler`
 - `BinaryWebSocketServerHandler`
+
+<br>
+
+Client:
+<pre>
+TBD
+</pre>
+
+Server:
+<pre>
+TBD
+</pre>
 
 <br>
 
@@ -99,6 +121,8 @@ You can then run `npm run launch` in `example/server/`, as mentioned above.
     - `ts/` contains server-side `UDPWebSocketServer.ts` and `WebSocketServerHandler.ts`
 
 If you want Javascript sources, in `src/`, run `npm run build` to compile TypeScript to Javascript in `src/client/js/` and `src/server/js/`. Feel free to use [webpack](https://webpack.js.org/) or [rollup](https://rollupjs.org/guide/en/) for browser compatibility (on the client side) and minification.
+
+<br>
 
 #### `examples/` contains examples using the library source code
 - `examples/`
