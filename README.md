@@ -10,8 +10,9 @@ udp-ws is built on [WebRTC](https://webrtc.org/), which allows peer-to-peer UDP 
 
 udp-ws is inspired by and includes code snippets from [geckos.io](https://github.com/geckosio/geckos.io) by [yandeu](https://github.com/yandeu) and [node-webrtc-examples](https://github.com/node-webrtc/node-webrtc-examples).
 
-## Example
+## Examples
 
+#### `examples/barebone/`
 Client (resembles [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)):
 ```
 const ws = new UDPWebSocket('ws://localhost:3000');
@@ -42,6 +43,10 @@ wss.on('connection', ws => {
 ```
 
 In `examples/barebone/server/`, run `npm run launch`, and see the client-server example running in [localhost](http://localhost/). Open your console log using `Ctrl` + `Shift` + `I`.
+
+#### `examples/handler/`
+
+#### `examples/binaryHandler/`
 
 ## Prerequisites
 
