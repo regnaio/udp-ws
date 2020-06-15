@@ -12,7 +12,7 @@ udp-ws is inspired by and includes code snippets from [geckos.io](https://github
 
 ## Examples
 
-#### `examples/barebone/`
+#### `examples/barebones/` - A barebones example of UDPWebSocket
 Client (resembles [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)):
 ```
 const ws = new UDPWebSocket('ws://localhost:3000');
@@ -42,11 +42,15 @@ wss.on('connection', ws => {
 });
 ```
 
-In `examples/barebone/server/`, run `npm run launch`, and see the client-server example running in [localhost](http://localhost/). Open your console log using `Ctrl` + `Shift` + `I`.
+In `examples/barebones/server/`, run `npm run launch`, and see the client-server example running in [localhost](http://localhost/). Open your console log using `Ctrl` + `Shift` + `I`.
 
 #### `examples/handler/`
 
+In `examples/handler/server/`, run `npm run launch`.
+
 #### `examples/binaryHandler/`
+
+In `examples/binaryHandler/server/`, run `npm run launch`.
 
 ## Prerequisites
 
@@ -58,7 +62,7 @@ In `examples/barebone/server/`, run `npm run launch`, and see the client-server 
 - Install webpack-cli
     - `npm i -g webpack-cli`
 
-Run `npm i` in `examples/barebone/server/` to install all npm packages for all folders.
+Run `npm i` in `examples/barebones/server/` to install all npm packages for all required folders (via [postinstall](https://docs.npmjs.com/misc/scripts)).
 
 You can then run `npm run launch` in `example/server/`, as mentioned above.
 
@@ -81,7 +85,7 @@ If you want Javascript sources, in `src/`, run `npm run build` to compile TypeSc
     - `server/`
       - `ts/` contains server-side example using `UDPWebSocketServer.ts`
 
-In `examples/barebone/server/`, run `npm run launch` to run the client-server example, as mentioned above. Note that [webpack](https://webpack.js.org/) is used on the client side for browser compatibility.
+In `examples/barebones/server/`, run `npm run launch` to run the client-server example, as mentioned above. Note that [webpack](https://webpack.js.org/) is used on the client side for browser compatibility.
 
 <br>
 
