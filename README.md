@@ -68,7 +68,7 @@ You can then run `npm run launch` in `example/server/`, as mentioned above.
 
 If you want Javascript sources, in `src/`, run `npm run build` to compile TypeScript to Javascript in `src/client/js/` and `src/server/js/`. Feel free to use [webpack](https://webpack.js.org/) or [rollup](https://rollupjs.org/guide/en/) for browser compatibility (on the client side) and minification.
 
-#### `examples/` contains an example using the library source code
+#### `examples/` contains examples using the library source code
 - `examples/`
   - `reply/`
     - `client/`
