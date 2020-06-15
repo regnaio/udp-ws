@@ -98,7 +98,7 @@ export class BinaryWebSocketHandler {
   }
 
   dispatch(packet: ArrayBuffer): void {
-    const view = new DataView(packet, 0, 1);
+    const view = new DataView(packet);
     this._callbacks[view.getUint8(0)](packet);
   }
 }

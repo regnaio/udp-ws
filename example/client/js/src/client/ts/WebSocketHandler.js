@@ -82,7 +82,7 @@ class BinaryWebSocketHandler {
         this._ws.send(packet);
     }
     dispatch(packet) {
-        const view = new DataView(packet, 0, 1);
+        const view = new DataView(packet);
         this._callbacks[view.getUint8(0)](packet);
     }
 }

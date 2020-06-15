@@ -1,9 +1,22 @@
 import WebSocket from 'ws';
 // import { v4 as uuidv4 } from 'uuid';
 
+import { UDPWebSocket } from './UDPWebSocket';
+import { UDPWebSocketServer } from './UDPWebSocketServer';
+
 let count = 0;
 
+// Type of WebSocket being handled
+export enum WebSocketType {
+  TCP, // WebSocket
+  UDP // UDPWebSocket
+}
+
 export interface IDWebSocket extends WebSocket {
+  uuid: number
+}
+
+export interface IDUDPWebSocket extends UDPWebSocket {
   uuid: number
 }
 
@@ -13,18 +26,16 @@ interface JSONPacket {
 }
 
 export class WebSocketServerHandler {
-  private _wss: WebSocket.Server;
+  private _wss: WebSocket.Server | UDPWebSocketServer;
   private _callbacks = new Map<string, Function>();
   
-  constructor(port: number) {
-    this._wss = new WebSocket.Server({
-      port
-    });
-
-    this._wss.on('connection', (ws, req) => {
-      console.log(`User connected (IP: ${req.connection.remoteAddress}).`);
-      const iws = ws as IDWebSocket;
-      iws.binaryType = 'arraybuffer';
+  constructor(port: number, private _type: WebSocketType = WebSocketType.TCP) {
+    this._wss = this._type === WebSocketType.TCP ? new WebSocket.Server({ port }) : new UDPWebSocketServer(port);
+    
+    this._wss.on('connection', ws => {
+      // console.log(`User connected (IP: ${req.connection.remoteAddress}).`);
+      console.log('User connected');
+      const iws = this._type === WebSocketType.TCP ? ws as IDWebSocket : ws as IDUDPWebSocket;
       iws.uuid = count++;
       console.log(`gws.uuid: ${iws.uuid}`);
       
@@ -34,7 +45,8 @@ export class WebSocketServerHandler {
       });
     
       iws.on('close', () => {
-        console.log(`User disconnected (IP: ${req.connection.remoteAddress}).`);
+        // console.log(`User disconnected (IP: ${req.connection.remoteAddress}).`);
+        console.log('User disconnected');
       });
     });
   }
@@ -43,15 +55,52 @@ export class WebSocketServerHandler {
     this._callbacks.set(event, callback);
   }
 
-  send(iws: IDWebSocket, packet: JSONPacket): void {
-    const payload = JSON.stringify(packet);
-    iws.send(payload);
+  send(iws: IDWebSocket | IDUDPWebSocket, packet: JSONPacket): void {
+    iws.send(JSON.stringify(packet));
   }
 
-  dispatch(iws: IDWebSocket, packet: JSONPacket): void {
+  dispatch(iws: IDWebSocket | IDUDPWebSocket, packet: JSONPacket): void {
     const callback = this._callbacks.get(packet.event);
     if (callback !== undefined) {
       callback(iws, packet.data);
     }
+  }
+}
+
+export class BinaryWebSocketServerHandler {
+  private _wss: WebSocket.Server | UDPWebSocketServer;
+  private _callbacks = new Array<Function>();
+  
+  constructor(port: number, private _type: WebSocketType = WebSocketType.TCP) {
+    this._wss = this._type === WebSocketType.TCP ? new WebSocket.Server({ port }) : new UDPWebSocketServer(port);
+    
+    this._wss.on('connection', ws => {
+      console.log('User connected');
+      const iws = this._type === WebSocketType.TCP ? ws as IDWebSocket : ws as IDUDPWebSocket;
+      iws.binaryType = 'arraybuffer';
+      iws.uuid = count++;
+      console.log(`gws.uuid: ${iws.uuid}`);
+      
+      iws.on('message', msg => {
+        this.dispatch(iws, msg as ArrayBuffer);
+      });
+    
+      iws.on('close', () => {
+        console.log('User disconnected');
+      });
+    });
+  }
+
+  bind(event: number, callback: (iws: IDWebSocket, data: ArrayBuffer) => void): void {
+    this._callbacks[event] = callback;
+  }
+
+  send(iws: IDWebSocket | IDUDPWebSocket, packet: ArrayBuffer): void {
+    iws.send(packet);
+  }
+
+  dispatch(iws: IDWebSocket | IDUDPWebSocket, packet: ArrayBuffer): void {
+    const view = new DataView(packet);
+    this._callbacks[view.getUint8(0)](packet);
   }
 }
