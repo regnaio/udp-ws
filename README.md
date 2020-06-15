@@ -41,7 +41,7 @@ wss.on('connection', ws => {
 });
 ```
 
-In `examples/reply/server/`, run `npm run launch`, and see the client-server example running in [localhost](http://localhost/). Open your console log using `Ctrl` + `Shift` + `I`.
+In `examples/barebone/server/`, run `npm run launch`, and see the client-server example running in [localhost](http://localhost/). Open your console log using `Ctrl` + `Shift` + `I`.
 
 ## Prerequisites
 
@@ -53,7 +53,7 @@ In `examples/reply/server/`, run `npm run launch`, and see the client-server exa
 - Install webpack-cli
     - `npm i -g webpack-cli`
 
-Run `npm i` in `examples/reply/server/` to install all npm packages for all folders.
+Run `npm i` in `examples/barebone/server/` to install all npm packages for all folders.
 
 You can then run `npm run launch` in `example/server/`, as mentioned above.
 
@@ -76,7 +76,7 @@ If you want Javascript sources, in `src/`, run `npm run build` to compile TypeSc
     - `server/`
       - `ts/` contains server-side example using `UDPWebSocketServer.ts`
 
-In `examples/reply/server/`, run `npm run launch` to run the client-server example, as mentioned above. Note that [webpack](https://webpack.js.org/) is used on the client side for browser compatibility.
+In `examples/barebone/server/`, run `npm run launch` to run the client-server example, as mentioned above. Note that [webpack](https://webpack.js.org/) is used on the client side for browser compatibility.
 
 <br>
 
