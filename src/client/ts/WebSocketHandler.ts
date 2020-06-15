@@ -65,7 +65,7 @@ export class BinaryWebSocketHandler {
 
   constructor(private _url: string, private _type: WebSocketType = WebSocketType.TCP) {
     this._ws = this._type === WebSocketType.TCP ? new WebSocket(this._url) : new UDPWebSocket(this._url);
-    this._ws.binaryType = 'arraybuffer';
+    // this._ws.binaryType = 'arraybuffer';
   }
 
   connect(): Promise<void> {
@@ -77,28 +77,33 @@ export class BinaryWebSocketHandler {
 
       };
       this._ws.onopen = ev => {
+        this._ws.binaryType = 'arraybuffer';
         resolve();
       };
       this._ws.onerror = ev => {
         reject(ev);
       };
       
-      if (this._ws.readyState === WebSocket.OPEN) {
+      if (this._type === WebSocketType.TCP && this._ws.readyState === WebSocket.OPEN) {
+        resolve();
+      }
+      
+      if (this._type === WebSocketType.UDP && this._ws.readyState === 'open') {
         resolve();
       }
     });
   }
 
-  bind(event: number, callback: (data: ArrayBuffer) => void): void {
+  bind(event: number, callback: (buffer: ArrayBuffer) => void): void {
     this._callbacks[event] = callback;
   }
 
-  send(packet: ArrayBuffer): void {
-    this._ws.send(packet);
+  send(buffer: ArrayBuffer): void {
+    this._ws.send(buffer);
   }
 
-  dispatch(packet: ArrayBuffer): void {
-    const view = new DataView(packet);
-    this._callbacks[view.getUint8(0)](packet);
+  dispatch(buffer: ArrayBuffer): void {
+    const view = new DataView(buffer);
+    this._callbacks[view.getUint8(0)](buffer);
   }
 }

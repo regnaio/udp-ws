@@ -39,7 +39,6 @@ class UDPWebSocketServer extends events_1.EventEmitter {
             console.log('bind connect data: ', data);
             // console.log(`iws.uuid: ${iws.uuid}`);
             const client = new UDPWebSocket_1.UDPWebSocket(iws.uuid, this, this._configuration);
-            client.binaryType = 'arraybuffer';
             this.clients.set(iws.uuid, {
                 iws,
                 client

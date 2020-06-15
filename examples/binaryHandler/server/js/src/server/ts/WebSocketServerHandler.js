@@ -57,7 +57,6 @@ class BinaryWebSocketServerHandler {
             iws.uuid = count++;
             console.log(`iws.uuid: ${iws.uuid}`);
             iws.on('message', data => {
-                console.log('on message data: ', data);
                 this.dispatch(iws, data);
             });
             iws.on('close', () => {
@@ -68,13 +67,12 @@ class BinaryWebSocketServerHandler {
     bind(event, callback) {
         this._callbacks[event] = callback;
     }
-    send(iws, packet) {
-        // console.log('send iws: ', iws);
-        iws.send(packet);
+    send(iws, buffer) {
+        iws.send(buffer);
     }
-    dispatch(iws, packet) {
-        const view = new DataView(packet);
-        this._callbacks[view.getUint8(0)](iws, packet);
+    dispatch(iws, buffer) {
+        const view = new DataView(buffer);
+        this._callbacks[view.getUint8(0)](iws, buffer);
     }
 }
 exports.BinaryWebSocketServerHandler = BinaryWebSocketServerHandler;

@@ -41,12 +41,10 @@ class UDPWebSocket {
             throw `this._dataChannel === undefined`;
         this._dataChannel.binaryType = binaryType;
     }
-    // send(data: string | Blob | ArrayBuffer | ArrayBufferView) {
     send(data) {
         if (this._dataChannel === undefined) {
             throw `send this._dataChannel === undefined`;
         }
-        console.log('send data: ', data);
         this._dataChannel.send(data);
     }
     close() {

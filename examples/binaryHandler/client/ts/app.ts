@@ -10,12 +10,13 @@ enum WebSocketEvent {
   const webSocketHandler = new BinaryWebSocketHandler('ws://localhost:3000', WebSocketType.UDP);
   // const webSocketHandler = new WebSocketHandler('ws://13.59.33.46:3000', WebSocketType.UDP);
 
-  webSocketHandler.bind(WebSocketEvent.NumberEvent, data => {
-    console.log(data);
+  webSocketHandler.bind(WebSocketEvent.NumberEvent, buffer => {
+    const inView = new DataView(buffer);
+    console.log(inView.getFloat64(NUM_BYTES_UINT8));
   });
 
-  webSocketHandler.bind(WebSocketEvent.StringEvent, data => {
-    console.log(data);
+  webSocketHandler.bind(WebSocketEvent.StringEvent, buffer => {
+    console.log(bufferToString(buffer.slice(NUM_BYTES_UINT8)));
   });
 
   try {
@@ -29,13 +30,13 @@ enum WebSocketEvent {
       webSocketHandler.send(buffer);
     }, 1000);
 
-    // setInterval(() => {
-    //   const buffer = new ArrayBuffer(NUM_BYTES_UINT8 + NUM_BYTES_CHAR * 20);
-    //   const view = new DataView(buffer);
-    //   view.setUint8(0, WebSocketEvent.StringEvent);
-    //   writeStringToBuffer('client says hi', buffer, NUM_BYTES_UINT8);
-    //   webSocketHandler.send(buffer);
-    // }, 1000);
+    setInterval(() => {
+      const buffer = new ArrayBuffer(NUM_BYTES_UINT8 + NUM_BYTES_CHAR * 14);
+      const view = new DataView(buffer);
+      view.setUint8(0, WebSocketEvent.StringEvent);
+      writeStringToBuffer('client says hi', buffer, NUM_BYTES_UINT8);
+      webSocketHandler.send(buffer);
+    }, 1000);
   } catch (err) {
     throw err;
   }

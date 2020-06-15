@@ -3,7 +3,7 @@ const app = express();
 
 import { WebSocketType, WebSocketServerHandler } from './../../../../src/server/ts/WebSocketServerHandler';
 
-const webSocketServerHandler = new WebSocketServerHandler(3000, WebSocketType.UDP)
+const webSocketServerHandler = new WebSocketServerHandler(3000, WebSocketType.UDP);
 
 webSocketServerHandler.bind('client', (iws, data) => {
 	console.log(data);

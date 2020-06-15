@@ -44,7 +44,6 @@ export class UDPWebSocketServer extends EventEmitter {
       console.log('bind connect data: ', data);
       // console.log(`iws.uuid: ${iws.uuid}`);
       const client = new UDPWebSocket(iws.uuid, this, this._configuration);
-      client.binaryType = 'arraybuffer';
       this.clients.set(iws.uuid, {
         iws,
         client

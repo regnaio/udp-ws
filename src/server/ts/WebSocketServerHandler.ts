@@ -80,7 +80,6 @@ export class BinaryWebSocketServerHandler {
       console.log(`iws.uuid: ${iws.uuid}`);
       
       iws.on('message', data => {
-        console.log('on message data: ', data);
         this.dispatch(iws, data as ArrayBuffer);
       });
     
@@ -94,13 +93,12 @@ export class BinaryWebSocketServerHandler {
     this._callbacks[event] = callback;
   }
 
-  send(iws: IDWebSocket | IDUDPWebSocket, packet: ArrayBuffer): void {
-    // console.log('send iws: ', iws);
-    iws.send(packet);
+  send(iws: IDWebSocket | IDUDPWebSocket, buffer: ArrayBuffer): void {
+    iws.send(buffer);
   }
 
-  dispatch(iws: IDWebSocket | IDUDPWebSocket, packet: ArrayBuffer): void {
-    const view = new DataView(packet);
-    this._callbacks[view.getUint8(0)](iws, packet);
+  dispatch(iws: IDWebSocket | IDUDPWebSocket, buffer: ArrayBuffer): void {
+    const view = new DataView(buffer);
+    this._callbacks[view.getUint8(0)](iws, buffer);
   }
 }

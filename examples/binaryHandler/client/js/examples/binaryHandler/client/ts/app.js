@@ -19,11 +19,12 @@ var WebSocketEvent;
 (() => __awaiter(void 0, void 0, void 0, function* () {
     const webSocketHandler = new WebSocketHandler_1.BinaryWebSocketHandler('ws://localhost:3000', WebSocketHandler_1.WebSocketType.UDP);
     // const webSocketHandler = new WebSocketHandler('ws://13.59.33.46:3000', WebSocketType.UDP);
-    webSocketHandler.bind(WebSocketEvent.NumberEvent, data => {
-        console.log(data);
+    webSocketHandler.bind(WebSocketEvent.NumberEvent, buffer => {
+        const inView = new DataView(buffer);
+        console.log(inView.getFloat64(binaryTools_1.NUM_BYTES_UINT8));
     });
-    webSocketHandler.bind(WebSocketEvent.StringEvent, data => {
-        console.log(data);
+    webSocketHandler.bind(WebSocketEvent.StringEvent, buffer => {
+        console.log(binaryTools_1.bufferToString(buffer.slice(binaryTools_1.NUM_BYTES_UINT8)));
     });
     try {
         yield webSocketHandler.connect();
@@ -34,13 +35,13 @@ var WebSocketEvent;
             view.setFloat64(binaryTools_1.NUM_BYTES_UINT8, 12345.6789);
             webSocketHandler.send(buffer);
         }, 1000);
-        // setInterval(() => {
-        //   const buffer = new ArrayBuffer(NUM_BYTES_UINT8 + NUM_BYTES_CHAR * 20);
-        //   const view = new DataView(buffer);
-        //   view.setUint8(0, WebSocketEvent.StringEvent);
-        //   writeStringToBuffer('client says hi', buffer, NUM_BYTES_UINT8);
-        //   webSocketHandler.send(buffer);
-        // }, 1000);
+        setInterval(() => {
+            const buffer = new ArrayBuffer(binaryTools_1.NUM_BYTES_UINT8 + binaryTools_1.NUM_BYTES_CHAR * 14);
+            const view = new DataView(buffer);
+            view.setUint8(0, WebSocketEvent.StringEvent);
+            binaryTools_1.writeStringToBuffer('client says hi', buffer, binaryTools_1.NUM_BYTES_UINT8);
+            webSocketHandler.send(buffer);
+        }, 1000);
     }
     catch (err) {
         throw err;
