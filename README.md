@@ -62,8 +62,8 @@ In `examples/barebones/server/`, run `npm i` followed by `npm run launch`, and s
 Structure of packet: JSON object:
 <pre>
 {
-    event: '<em>name of event</em>',
-    data: { <em>...arbitrary data...</em> }
+    event: '<em>string representing event</em>',
+    data: { <em>arbitrary object representing data</em> }
 }
 </pre>
 
