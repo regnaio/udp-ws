@@ -42,7 +42,7 @@ wss.on('connection', ws => {
 });
 ```
 
-In `examples/barebones/server/`, run `npm run launch`, and see the client-server example running in [localhost](http://localhost/). Open your console log using `Ctrl` + `Shift` + `I`.
+In `examples/barebones/server/`, run `npm i` followed by `npm run launch`, and see the client-server example running in [localhost](http://localhost/). Observe the output in your console log (e.g. using `Ctrl` + `Shift` + `I` in Windows Chrome).
 
 #### `examples/handler/` - Handling WebSocket life cycle, messaging, and events using `WebSocketHandler` and `WebSocketServerHandler`
 
@@ -94,8 +94,6 @@ If you want Javascript sources, in `src/`, run `npm run build` to compile TypeSc
       - `ts/`
     - `server/`
       - `ts/`
-
-In `examples/barebones/server/`, run `npm run launch` to run the client-server example, as mentioned above. Note that [webpack](https://webpack.js.org/) is used on the client side for browser compatibility.
 
 <br>
 
