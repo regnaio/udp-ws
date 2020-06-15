@@ -34,7 +34,9 @@ const wss = new UDPWebSocketServer(3000);
 wss.on('connection', ws => {
     ws.on('message', data => {
         console.log(data);
-        ws.send('server says hi');
+        if (ws.readyState === 'open') {
+            ws.send('server says hi');
+        }
     });
 });
 ```
