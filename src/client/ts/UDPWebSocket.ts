@@ -5,10 +5,10 @@ export class UDPWebSocket {
   private _webSocketHandler: WebSocketHandler;
   private _dataChannel?: RTCDataChannel;
 
-  onopen: ((ev: Event) => any) | null = null;
-  onmessage: ((ev: MessageEvent) => any) | null = null;
-  onerror: ((ev: Event) => any) | null = null;
-  onclose: ((ev: CloseEvent) => any) | null = null;
+  onopen: ((ev: Event) => any) = ev => {};
+  onmessage: ((ev: MessageEvent) => any) = ev => {};
+  onerror: ((ev: Event) => any) = ev => {};
+  onclose: ((ev: CloseEvent) => any) = ev => {};
 
   constructor(url: string, configuration?: RTCConfiguration) {
     this._webSocketHandler = new WebSocketHandler(url);
@@ -97,33 +97,25 @@ export class UDPWebSocket {
       console.log(`onopen readyState: ${this._dataChannel!.readyState}`);
       console.log('onopen ev: ', ev);
 
-      if (this.onopen !== null) {
-        this.onopen(ev);
-      }
+      this.onopen(ev);
 
       this._dataChannel!.onmessage = (ev: MessageEvent) => {
         console.log('onmessage ev: ', ev);
 
-        if (this.onmessage !== null) {
-          this.onmessage(ev);
-        }
+        this.onmessage(ev);
       };
 
     };
     this._dataChannel.onerror = (ev: Event) => {
       console.log('onerror ev: ', ev);
 
-      if (this.onerror !== null) {
-        this.onerror(ev);
-      }
+      this.onerror(ev);
     };
     this._dataChannel.onclose = (ev: Event) => {
       console.log(`onclose readyState: ${this._dataChannel!.readyState}`);
       console.log('onclose ev: ', ev);
 
-      if (this.onclose !== null) {
-        this.onclose(ev as CloseEvent);
-      }
+      this.onclose(ev as CloseEvent);
     };
   }
 }

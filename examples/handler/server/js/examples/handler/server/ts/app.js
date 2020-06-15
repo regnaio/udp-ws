@@ -5,20 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const app = express_1.default();
-const UDPWebSocketServer_1 = require("./../../../../src/server/ts/UDPWebSocketServer");
-const wss = new UDPWebSocketServer_1.UDPWebSocketServer(3000);
-wss.on('connection', ws => {
-    // setTimeout(() => {
-    // 	ws.close();
-    // }, 5000);
-    ws.on('message', data => {
-        console.log(data);
-        if (ws.readyState === 'open') {
-            ws.send('server says hi');
-        }
-    });
-    ws.on('close', () => {
-        console.log('close');
+const WebSocketServerHandler_1 = require("./../../../../src/server/ts/WebSocketServerHandler");
+const webSocketServerHandler = new WebSocketServerHandler_1.WebSocketServerHandler(3000, WebSocketServerHandler_1.WebSocketType.UDP);
+webSocketServerHandler.bind('client', (iws, data) => {
+    console.log(data);
+    webSocketServerHandler.send(iws, {
+        event: 'server',
+        data: {}
     });
 });
 // see tsconfig rootDirs and js folder to see why we have so many ../

@@ -1,28 +1,24 @@
 import { UDPWebSocket } from './../../../../src/client/ts/UDPWebSocket';
-import { WebSocketHandler } from './../../../../src/client/ts/WebSocketHandler';
+import { WebSocketType, WebSocketHandler } from './../../../../src/client/ts/WebSocketHandler';
 
-const ws = new UDPWebSocket('ws://localhost:3000');
-// const ws = new UDPWebSocket('ws://13.59.33.46:3000');
+(async () => {
+  const webSocketHandler = new WebSocketHandler('ws://localhost:3000', WebSocketType.UDP);
+  // const webSocketHandler = new WebSocketHandler('ws://13.59.33.46:3000', WebSocketType.UDP);
 
-ws.onopen = ev => {
-  console.log('open ev', ev);
-  ws.binaryType = 'arraybuffer';
-};
+  webSocketHandler.bind('server', data => {
+    console.log(data);
+  });
 
-ws.onmessage = ev => {
-  console.log('onmessage ev.data: ', ev.data);
-};
-
-ws.onerror = ev => {
-  console.log('onerror ev: ', ev);
-};
-
-ws.onclose = ev => {
-  console.log('close ev', ev);
-};
-
-setInterval(() => {
-  if (ws.readyState === 'open') {
-    ws.send('client says hi');
+  try {
+    await webSocketHandler.connect();
+    
+    setInterval(() => {
+      webSocketHandler.send({
+        event: 'client',
+        data: {}
+      });
+    }, 1000);
+  } catch (err) {
+    throw err;
   }
-}, 1000);
+})();

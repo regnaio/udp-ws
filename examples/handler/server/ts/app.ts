@@ -2,27 +2,17 @@ import express from 'express';
 const app = express();
 
 import { UDPWebSocketServer } from './../../../../src/server/ts/UDPWebSocketServer';
-import { WebSocketServerHandler } from './../../../../src/server/ts/WebSocketServerHandler';
+import { WebSocketType, WebSocketServerHandler } from './../../../../src/server/ts/WebSocketServerHandler';
 
-const wss = new UDPWebSocketServer(3000);
+const webSocketServerHandler = new WebSocketServerHandler(3000, WebSocketType.UDP)
 
-wss.on('connection', ws => {
-	// setTimeout(() => {
-	// 	ws.close();
-	// }, 5000);
-
-	ws.on('message', data => {
-		console.log(data);
-		if (ws.readyState === 'open') {
-			ws.send('server says hi');
-		}
-	});
-
-	ws.on('close', () => {
-		console.log('close');
-	});
+webSocketServerHandler.bind('client', (iws, data) => {
+	console.log(data);
+	webSocketServerHandler.send(iws, {
+		event: 'server',
+		data: {}
+	})
 });
-
 
 // see tsconfig rootDirs and js folder to see why we have so many ../
 app.use(express.static(__dirname + '/../../../../../../client/'));
