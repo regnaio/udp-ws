@@ -16,7 +16,7 @@ class UDPWebSocket {
         this.onmessage = null;
         this.onerror = null;
         this.onclose = null;
-        this._JSONWebSocketHandler = new WebSocketHandler_1.WebSocketHandler(url);
+        this._webSocketHandler = new WebSocketHandler_1.WebSocketHandler(url);
         this.bindCallbacks();
         this.startSignaling();
         if (configuration === undefined) {
@@ -56,8 +56,8 @@ class UDPWebSocket {
     startSignaling() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                yield this._JSONWebSocketHandler.connect();
-                this._JSONWebSocketHandler.send({
+                yield this._webSocketHandler.connect();
+                this._webSocketHandler.send({
                     event: 'connect',
                     data: {}
                 });
@@ -68,12 +68,12 @@ class UDPWebSocket {
         });
     }
     bindCallbacks() {
-        this._JSONWebSocketHandler.bind('offer', (data) => __awaiter(this, void 0, void 0, function* () {
+        this._webSocketHandler.bind('offer', (data) => __awaiter(this, void 0, void 0, function* () {
             console.log('bind offer data: ', data);
             try {
                 yield this._localPeerConnection.setRemoteDescription(data);
                 yield this._localPeerConnection.setLocalDescription(yield this._localPeerConnection.createAnswer());
-                this._JSONWebSocketHandler.send({
+                this._webSocketHandler.send({
                     event: 'answer',
                     data: this._localPeerConnection.localDescription || {}
                 });
@@ -82,7 +82,7 @@ class UDPWebSocket {
                 throw err;
             }
         }));
-        this._JSONWebSocketHandler.bind('icecandidate', (data) => {
+        this._webSocketHandler.bind('icecandidate', (data) => {
             console.log('bind icecandidate data: ', data);
             // @ts-ignore
             this._localPeerConnection.addIceCandidate(data);

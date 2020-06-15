@@ -12,14 +12,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const events_1 = require("events");
 const WebSocketServerHandler_1 = require("./WebSocketServerHandler");
 const UDPWebSocket_1 = require("./UDPWebSocket");
-// Each client has a normal WebSocket for signaling (handshake) and a UDPWebSocket for UDP communication
+// Each client has a normal WebSocket for signaling and a UDPWebSocket for UDP communication
 exports.clients = new Map();
 class UDPWebSocketServer extends events_1.EventEmitter {
     constructor(port, _configuration) {
         super();
         this._configuration = _configuration;
         this.clients = exports.clients;
-        this._JSONWebSocketServerHandler = new WebSocketServerHandler_1.WebSocketServerHandler(port);
+        this._webSocketServerHandler = new WebSocketServerHandler_1.WebSocketServerHandler(port);
         this.bindCallbacks();
     }
     // Public API start
@@ -31,11 +31,11 @@ class UDPWebSocketServer extends events_1.EventEmitter {
         }
     }
     // Public API end
-    get JSONWebSocketServerHandler() {
-        return this._JSONWebSocketServerHandler;
+    get webSocketServerHandler() {
+        return this._webSocketServerHandler;
     }
     bindCallbacks() {
-        this._JSONWebSocketServerHandler.bind('connect', (iws, data) => __awaiter(this, void 0, void 0, function* () {
+        this._webSocketServerHandler.bind('connect', (iws, data) => __awaiter(this, void 0, void 0, function* () {
             console.log('bind connect data: ', data);
             console.log(`iws.uuid: ${iws.uuid}`);
             const client = new UDPWebSocket_1.UDPWebSocket(iws.uuid, this, this._configuration);
@@ -47,7 +47,7 @@ class UDPWebSocketServer extends events_1.EventEmitter {
             this.emit('connection', client);
             try {
                 yield client.localPeerConnection.setLocalDescription(yield client.localPeerConnection.createOffer());
-                this._JSONWebSocketServerHandler.send(iws, {
+                this._webSocketServerHandler.send(iws, {
                     event: 'offer',
                     data: client.localPeerConnection.localDescription || {}
                 });
@@ -56,7 +56,7 @@ class UDPWebSocketServer extends events_1.EventEmitter {
                 throw err;
             }
         }));
-        this._JSONWebSocketServerHandler.bind('answer', (iws, data) => __awaiter(this, void 0, void 0, function* () {
+        this._webSocketServerHandler.bind('answer', (iws, data) => __awaiter(this, void 0, void 0, function* () {
             var _a;
             console.log('bind answer data: ', data);
             const client = (_a = this.clients.get(iws.uuid)) === null || _a === void 0 ? void 0 : _a.client;
@@ -70,7 +70,7 @@ class UDPWebSocketServer extends events_1.EventEmitter {
                 throw err;
             }
         }));
-        this._JSONWebSocketServerHandler.bind('icecandidate', (iws, data) => {
+        this._webSocketServerHandler.bind('icecandidate', (iws, data) => {
             console.log('bind icecandidate data: ', data);
             const client = this.clients.get(iws.uuid);
             if (client === undefined) {

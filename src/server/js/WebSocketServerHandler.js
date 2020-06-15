@@ -18,17 +18,15 @@ class WebSocketServerHandler {
         this._callbacks = new Map();
         this._wss = this._type === WebSocketType.TCP ? new ws_1.default.Server({ port }) : new UDPWebSocketServer_1.UDPWebSocketServer(port);
         this._wss.on('connection', ws => {
-            // console.log(`User connected (IP: ${req.connection.remoteAddress}).`);
             console.log('User connected');
             const iws = this._type === WebSocketType.TCP ? ws : ws;
             iws.uuid = count++;
             console.log(`gws.uuid: ${iws.uuid}`);
-            iws.on('message', msg => {
-                const packet = JSON.parse(msg);
+            iws.on('message', data => {
+                const packet = JSON.parse(data);
                 this.dispatch(iws, packet);
             });
             iws.on('close', () => {
-                // console.log(`User disconnected (IP: ${req.connection.remoteAddress}).`);
                 console.log('User disconnected');
             });
         });
@@ -58,8 +56,8 @@ class BinaryWebSocketServerHandler {
             iws.binaryType = 'arraybuffer';
             iws.uuid = count++;
             console.log(`gws.uuid: ${iws.uuid}`);
-            iws.on('message', msg => {
-                this.dispatch(iws, msg);
+            iws.on('message', data => {
+                this.dispatch(iws, data);
             });
             iws.on('close', () => {
                 console.log('User disconnected');

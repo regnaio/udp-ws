@@ -105,7 +105,7 @@ export class UDPWebSocket extends EventEmitter {
       throw `onIceCandidate iws === undefined`;
     }
 
-    this._UDPWebSocketServer.JSONWebSocketServerHandler.send(iws, {
+    this._UDPWebSocketServer.webSocketServerHandler.send(iws, {
       event: 'icecandidate',
       data: event.candidate || {}
     });

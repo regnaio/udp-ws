@@ -2,7 +2,7 @@ import { WebSocketHandler } from './WebSocketHandler';
 
 export class UDPWebSocket {
   private _localPeerConnection: RTCPeerConnection;
-  private _JSONWebSocketHandler: WebSocketHandler;
+  private _webSocketHandler: WebSocketHandler;
   private _dataChannel?: RTCDataChannel;
 
   onopen: ((ev: Event) => any) | null = null;
@@ -11,7 +11,7 @@ export class UDPWebSocket {
   onclose: ((ev: CloseEvent) => any) | null = null;
 
   constructor(url: string, configuration?: RTCConfiguration) {
-    this._JSONWebSocketHandler = new WebSocketHandler(url);
+    this._webSocketHandler = new WebSocketHandler(url);
     this.bindCallbacks();
     this.startSignaling();
 
@@ -55,8 +55,8 @@ export class UDPWebSocket {
 
   private async startSignaling(): Promise<void> {
     try {
-      await this._JSONWebSocketHandler.connect();
-      this._JSONWebSocketHandler.send({
+      await this._webSocketHandler.connect();
+      this._webSocketHandler.send({
         event: 'connect',
         data: {}
       });
@@ -66,13 +66,13 @@ export class UDPWebSocket {
   }
 
   private bindCallbacks(): void {
-    this._JSONWebSocketHandler.bind('offer', async (data) => {
+    this._webSocketHandler.bind('offer', async (data) => {
       console.log('bind offer data: ', data);
 
       try {
         await this._localPeerConnection.setRemoteDescription(data as RTCSessionDescriptionInit);
         await this._localPeerConnection.setLocalDescription(await this._localPeerConnection.createAnswer());
-        this._JSONWebSocketHandler.send({
+        this._webSocketHandler.send({
           event: 'answer',
           data: this._localPeerConnection.localDescription || {}
         });
@@ -81,7 +81,7 @@ export class UDPWebSocket {
       }
     });
 
-    this._JSONWebSocketHandler.bind('icecandidate', (data) => {
+    this._webSocketHandler.bind('icecandidate', (data) => {
       console.log('bind icecandidate data: ', data);
       
       // @ts-ignore
