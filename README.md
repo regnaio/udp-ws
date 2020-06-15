@@ -16,7 +16,7 @@
 
 #### 1. `examples/barebones/` - Barebones example of
 - `UDPWebSocket`
--`UDPWebSocketServer`
+- `UDPWebSocketServer`
 
 Client (resembles [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)):
 ```
