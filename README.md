@@ -62,7 +62,7 @@ In `examples/barebones/server/`, run `npm i` followed by `npm run launch`, and s
 Client:
 <pre>
 (async () => {
-    const webSocketHandler = new WebSocketHandler('ws://localhost:3000', WebSocketType.UDP);
+    const webSocketHandler = new <b>WebSocketHandler</b>('ws://localhost:3000', WebSocketType.UDP);
 
     webSocketHandler.bind('server', data => {
         console.log(data);
@@ -85,7 +85,15 @@ Client:
 
 Server:
 <pre>
-TBD
+const webSocketServerHandler = new <b>WebSocketServerHandler</b>(3000, WebSocketType.UDP);
+
+webSocketServerHandler.bind('client', (iws, data) => {
+    console.log(data);
+    webSocketServerHandler.send(iws, {
+        event: 'server',
+        data: {}
+    });
+});
 </pre>
 
 In `examples/handler/server/`, run `npm i` followed by `npm run launch`.
@@ -100,7 +108,45 @@ In `examples/handler/server/`, run `npm i` followed by `npm run launch`.
 
 Client:
 <pre>
-TBD
+enum WebSocketEvent {
+  NumberEvent = 0,
+  StringEvent
+}
+
+(async () => {
+    const webSocketHandler = new <b>BinaryWebSocketHandler</b>('ws://localhost:3000', WebSocketType.UDP);
+
+    webSocketHandler.bind(WebSocketEvent.NumberEvent, buffer => {
+        const inView = new DataView(buffer);
+        console.log(inView.getFloat64(NUM_BYTES_UINT8));
+    });
+
+    webSocketHandler.bind(WebSocketEvent.StringEvent, buffer => {
+        console.log(bufferToString(buffer.slice(NUM_BYTES_UINT8)));
+    });
+
+    try {
+        await webSocketHandler.connect();
+
+        setInterval(() => {
+            const buffer = new ArrayBuffer(NUM_BYTES_UINT8 + NUM_BYTES_FLOAT64);
+            const view = new DataView(buffer);
+            view.setUint8(0, WebSocketEvent.NumberEvent);
+            view.setFloat64(NUM_BYTES_UINT8, 12345.6789);
+            webSocketHandler.send(buffer);
+        }, 1000);
+
+        setInterval(() => {
+            const buffer = new ArrayBuffer(NUM_BYTES_UINT8 + NUM_BYTES_CHAR * 14);
+            const view = new DataView(buffer);
+            view.setUint8(0, WebSocketEvent.StringEvent);
+            writeStringToBuffer('client says hi', buffer, NUM_BYTES_UINT8);
+            webSocketHandler.send(buffer);
+        }, 1000);
+    } catch (err) {
+        throw err;
+    }
+})();
 </pre>
 
 Server:
