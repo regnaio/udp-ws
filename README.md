@@ -81,7 +81,7 @@ Client:
     try {
         await webSocketHandler.connect();
 
-        // <b>Code that must be executed only after the WebSocket is open</b>
+        // Code that must be executed only after the WebSocket is open
         setInterval(() => {
             webSocketHandler.send({
                 event: 'ClientMessageEvent',
@@ -152,7 +152,7 @@ enum WebSocketEvent {
 
     try {
         await webSocketHandler.connect();
-        // <b>Code that must be executed only after the WebSocket is open</b>
+        // Code that must be executed only after the WebSocket is open
         setInterval(() => {
             const buffer = new ArrayBuffer(NUM_BYTES_UINT8 + NUM_BYTES_FLOAT64);
             const view = new DataView(buffer);
