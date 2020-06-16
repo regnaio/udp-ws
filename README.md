@@ -102,7 +102,7 @@ Server:
 // WebSocketType.TCP for WebSocket, WebSocketType.UDP for UDPWebSocket
 const webSocketServerHandler = new WebSocketServerHandler(3000, WebSocketType.UDP);
 
-webSocketServerHandler.bind('client', (iws, data) => {
+webSocketServerHandler.bind('ClientMessageEvent', (iws, data) => {
     console.log(data);
     webSocketServerHandler.send(iws, {
         event: 'ServerResponseEvent',
