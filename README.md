@@ -36,8 +36,8 @@ setInterval(() => {
 ```
 
 Server (resembles [ws](https://www.npmjs.com/package/ws)):
-<pre>
-const wss = new <b>UDPWebSocketServer</b>(3000);
+```js
+const wss = new UDPWebSocketServer(3000);
 
 wss.on('connection', ws => {
     ws.on('message', data => {
@@ -47,7 +47,7 @@ wss.on('connection', ws => {
         }
     });
 });
-</pre>
+```
 
 In `examples/barebones/server/`, run `npm i` followed by `npm run launch`, and see the client-server example running in [localhost](http://localhost/). Observe the output in your console log (e.g. using `Ctrl` + `Shift` + `I` in Windows Chrome).
 
