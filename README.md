@@ -230,7 +230,7 @@ In `examples/binaryHandler/server/`, run `npm i` followed by `npm run launch`.
 
 Run `npm i` in `examples/barebones/server/` to install all npm packages for all required folders (via [postinstall](https://docs.npmjs.com/misc/scripts)).
 
-You can then run `npm run launch` in `example/server/`, as mentioned above.
+You can then run `npm run launch` in `examples/<name of example>/server/`, as mentioned above.
 
 <br>
 
