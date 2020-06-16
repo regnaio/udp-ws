@@ -134,8 +134,8 @@ import { NUM_BYTES_UINT8, NUM_BYTES_FLOAT64, NUM_BYTES_CHAR, writeStringToBuffer
 // Uint8 representing event (NumberEvent = 0, StringEvent = 1),
 // which is the first byte of each packet sent and received
 enum WebSocketEvent {
-  NumberEvent = 0,
-  StringEvent
+    NumberEvent = 0,
+    StringEvent
 }
 
 (async () => {
