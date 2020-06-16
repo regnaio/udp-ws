@@ -155,6 +155,7 @@ enum WebSocketEvent {
 
     try {
         await webSocketHandler.connect();
+        
         // Code that must be executed only after the WebSocket is open
         setInterval(() => {
             const buffer = new ArrayBuffer(NUM_BYTES_UINT8 + NUM_BYTES_FLOAT64);
