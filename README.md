@@ -59,7 +59,7 @@ In `examples/barebones/server/`, run `npm i` followed by `npm run launch`, and s
 
 <br>
 
-Structure of packet: JSON object:
+Structure of packet: object conforming to [`JSON.stringify`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) and [`JSON.parse`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse):
 <pre>
 {
     event: '<em>string representing event</em>',
@@ -81,6 +81,7 @@ Client:
     try {
         await webSocketHandler.connect();
 
+        // <b>Code that must be executed only after the WebSocket is open</b>
         setInterval(() => {
             webSocketHandler.send({
                 event: 'client',
