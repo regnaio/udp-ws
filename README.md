@@ -123,7 +123,7 @@ In `examples/handler/server/`, run `npm i` followed by `npm run launch`.
 
 <br>
 
-Structure of packet: `ArrayBuffer` with leading `Uint8` byte representing the event (thus 2^8 = 256 maximum handled events unless `Uint8` is replaced with something greater, e.g. `Uint16`) followed by an arbitrary number of bytes representing the data
+Structure of packet: [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) with leading `Uint8` byte representing the event (thus 2^8 = 256 maximum handled events unless `Uint8` is replaced with something greater, e.g. `Uint16`) followed by an arbitrary number of bytes representing the data
 ```ts
 ArrayBuffer(NUM_BYTES_UINT8 + NUM_BYTES_UINT32 * X + NUM_BYTES_FLOAT64 * Y + NUM_BYTES_CHAR * Z + ...)
 ```
