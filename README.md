@@ -123,7 +123,7 @@ In `examples/handler/server/`, run `npm i` followed by `npm run launch`.
 
 <br>
 
-Structure of packet: `ArrayBuffer` with leading `Uint8` representing the event (thus 2^8 = 256 maximum handled events unless `Uint8` is replaced with something greater, e.g. `Uint16`) followed by an arbitrary number of bytes representing the data
+Structure of packet: `ArrayBuffer` with leading `Uint8` byte representing the event (thus 2^8 = 256 maximum handled events unless `Uint8` is replaced with something greater, e.g. `Uint16`) followed by an arbitrary number of bytes representing the data
 
 <br>
 
