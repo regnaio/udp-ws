@@ -9,6 +9,7 @@ enum WebSocketEvent {
 	StringEvent
 }
 
+// WebSocketType.TCP for WebSocket, WebSocketType.UDP for UDPWebSocket
 const webSocketServerHandler = new BinaryWebSocketServerHandler(3000, WebSocketType.UDP);
 
 webSocketServerHandler.bind(WebSocketEvent.NumberEvent, (iws, buffer) => {

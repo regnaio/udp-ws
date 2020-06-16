@@ -9,6 +9,7 @@ enum WebSocketEvent {
 }
 
 (async () => {
+  // WebSocketType.TCP for WebSocket, WebSocketType.UDP for UDPWebSocket
   const webSocketHandler = new BinaryWebSocketHandler('ws://localhost:3000', WebSocketType.UDP);
   // const webSocketHandler = new WebSocketHandler('ws://13.59.33.46:3000', WebSocketType.UDP);
 

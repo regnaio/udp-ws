@@ -1,6 +1,7 @@
 import { WebSocketType, WebSocketHandler } from './../../../../src/client/ts/WebSocketHandler';
 
 (async () => {
+  // WebSocketType.TCP for WebSocket, WebSocketType.UDP for UDPWebSocket
   const webSocketHandler = new WebSocketHandler('ws://localhost:3000', WebSocketType.UDP);
   // const webSocketHandler = new WebSocketHandler('ws://13.59.33.46:3000', WebSocketType.UDP);
 

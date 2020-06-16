@@ -3,6 +3,7 @@ const app = express();
 
 import { WebSocketType, WebSocketServerHandler } from './../../../../src/server/ts/WebSocketServerHandler';
 
+// WebSocketType.TCP for WebSocket, WebSocketType.UDP for UDPWebSocket
 const webSocketServerHandler = new WebSocketServerHandler(3000, WebSocketType.UDP);
 
 webSocketServerHandler.bind('ClientMessageEvent', (iws, data) => {
