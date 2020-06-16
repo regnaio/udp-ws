@@ -15,8 +15,8 @@
 ## Examples
 
 #### 1. `examples/barebones/` - Barebones example of
-- `UDPWebSocket`
-- `UDPWebSocketServer`
+- [`UDPWebSocket`](https://github.com/regnaio/udp-ws/blob/master/src/client/ts/UDPWebSocket.ts)
+- [`UDPWebSocketServer`](https://github.com/regnaio/udp-ws/blob/master/src/server/ts/UDPWebSocketServer.ts)
 
 <br>
 
