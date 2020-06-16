@@ -21,7 +21,7 @@
 <br>
 
 Client (resembles [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)):
-```js
+```ts
 const ws = new UDPWebSocket('ws://localhost:3000');
 
 ws.onmessage = ev => {
@@ -36,7 +36,7 @@ setInterval(() => {
 ```
 
 Server (resembles [ws](https://www.npmjs.com/package/ws)):
-```js
+```ts
 const wss = new UDPWebSocketServer(3000);
 
 wss.on('connection', ws => {
@@ -70,7 +70,7 @@ Structure of packet: object conforming to [`JSON.stringify`](https://developer.m
 <br>
 
 Client:
-```js
+```ts
 (async () => {
     // WebSocketType.TCP for WebSocket, WebSocketType.UDP for UDPWebSocket
     const webSocketHandler = new WebSocketHandler('ws://localhost:3000', WebSocketType.UDP);
@@ -98,7 +98,7 @@ Client:
 ```
 
 Server:
-```js
+```ts
 // WebSocketType.TCP for WebSocket, WebSocketType.UDP for UDPWebSocket
 const webSocketServerHandler = new WebSocketServerHandler(3000, WebSocketType.UDP);
 
@@ -128,7 +128,7 @@ Structure of packet: `ArrayBuffer` with leading `Uint8` representing the event (
 <br>
 
 Client:
-```js
+```ts
 import { NUM_BYTES_UINT8, NUM_BYTES_FLOAT64, NUM_BYTES_CHAR, writeStringToBuffer, bufferToString } from './binaryTools';
 
 // Uint8 representing event (NumberEvent = 0, StringEvent = 1),
@@ -183,7 +183,7 @@ enum WebSocketEvent {
 ```
 
 Server:
-```js
+```ts
 import { NUM_BYTES_UINT8, NUM_BYTES_FLOAT64, NUM_BYTES_CHAR, writeStringToBuffer, bufferToString } from './binaryTools';
 
 enum WebSocketEvent {
