@@ -72,6 +72,7 @@ Structure of packet: object conforming to [`JSON.stringify`](https://developer.m
 Client:
 ```js
 (async () => {
+    // WebSocketType.TCP for WebSocket, WebSocketType.UDP for UDPWebSocket
     const webSocketHandler = new WebSocketHandler('ws://localhost:3000', WebSocketType.UDP);
 
     webSocketHandler.bind('ServerResponseEvent', data => {
@@ -98,6 +99,7 @@ Client:
 
 Server:
 ```js
+// WebSocketType.TCP for WebSocket, WebSocketType.UDP for UDPWebSocket
 const webSocketServerHandler = new WebSocketServerHandler(3000, WebSocketType.UDP);
 
 webSocketServerHandler.bind('client', (iws, data) => {
@@ -137,6 +139,7 @@ enum WebSocketEvent {
 }
 
 (async () => {
+    // WebSocketType.TCP for WebSocket, WebSocketType.UDP for UDPWebSocket
     const webSocketHandler = new BinaryWebSocketHandler('ws://localhost:3000', WebSocketType.UDP);
 
     webSocketHandler.bind(WebSocketEvent.NumberEvent, buffer => {
@@ -188,6 +191,7 @@ enum WebSocketEvent {
     StringEvent
 }
 
+// WebSocketType.TCP for WebSocket, WebSocketType.UDP for UDPWebSocket
 const webSocketServerHandler = new BinaryWebSocketServerHandler(3000, WebSocketType.UDP);
 
 webSocketServerHandler.bind(WebSocketEvent.NumberEvent, (iws, buffer) => {
