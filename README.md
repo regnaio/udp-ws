@@ -70,11 +70,11 @@ Structure of packet: object conforming to [`JSON.stringify`](https://developer.m
 <br>
 
 Client:
-<pre>
+```js
 (async () => {
-    const webSocketHandler = new <b>WebSocketHandler</b>('ws://localhost:3000', WebSocketType.UDP);
+    const webSocketHandler = new WebSocketHandler('ws://localhost:3000', WebSocketType.UDP);
 
-    webSocketHandler.<b>bind</b>('ServerResponseEvent', data => {
+    webSocketHandler.bind('ServerResponseEvent', data => {
         console.log(data);
     });
 
@@ -94,13 +94,13 @@ Client:
         throw err;
     }
 })();
-</pre>
+```
 
 Server:
-<pre>
-const webSocketServerHandler = new <b>WebSocketServerHandler</b>(3000, WebSocketType.UDP);
+```js
+const webSocketServerHandler = new WebSocketServerHandler(3000, WebSocketType.UDP);
 
-webSocketServerHandler.<b>bind</b>('client', (iws, data) => {
+webSocketServerHandler.bind('client', (iws, data) => {
     console.log(data);
     webSocketServerHandler.send(iws, {
         event: 'ServerResponseEvent',
@@ -109,7 +109,7 @@ webSocketServerHandler.<b>bind</b>('client', (iws, data) => {
         }
     });
 });
-</pre>
+```
 
 In `examples/handler/server/`, run `npm i` followed by `npm run launch`.
 
@@ -126,7 +126,7 @@ Structure of packet: `ArrayBuffer` with leading `Uint8` representing the event (
 <br>
 
 Client:
-<pre>
+```js
 import { NUM_BYTES_UINT8, NUM_BYTES_FLOAT64, NUM_BYTES_CHAR, writeStringToBuffer, bufferToString } from './binaryTools';
 
 // Uint8 representing event (NumberEvent = 0, StringEvent = 1),
@@ -137,9 +137,9 @@ enum WebSocketEvent {
 }
 
 (async () => {
-    const webSocketHandler = new <b>BinaryWebSocketHandler</b>('ws://localhost:3000', WebSocketType.UDP);
+    const webSocketHandler = new BinaryWebSocketHandler('ws://localhost:3000', WebSocketType.UDP);
 
-    webSocketHandler.<b>bind</b>(WebSocketEvent.NumberEvent, buffer => {
+    webSocketHandler.bind(WebSocketEvent.NumberEvent, buffer => {
         const view = new DataView(buffer);
         // read Float64 after first byte representing event
         console.log(view.getFloat64(NUM_BYTES_UINT8));
@@ -177,10 +177,10 @@ enum WebSocketEvent {
         throw err;
     }
 })();
-</pre>
+```
 
 Server:
-<pre>
+```js
 import { NUM_BYTES_UINT8, NUM_BYTES_FLOAT64, NUM_BYTES_CHAR, writeStringToBuffer, bufferToString } from './binaryTools';
 
 enum WebSocketEvent {
@@ -188,9 +188,9 @@ enum WebSocketEvent {
     StringEvent
 }
 
-const webSocketServerHandler = new <b>BinaryWebSocketServerHandler</b>(3000, WebSocketType.UDP);
+const webSocketServerHandler = new BinaryWebSocketServerHandler(3000, WebSocketType.UDP);
 
-webSocketServerHandler.<b>bind</b>(WebSocketEvent.NumberEvent, (iws, buffer) => {
+webSocketServerHandler.bind(WebSocketEvent.NumberEvent, (iws, buffer) => {
     const inView = new DataView(buffer);
     console.log(inView.getFloat64(NUM_BYTES_UINT8));
 
@@ -210,7 +210,7 @@ webSocketServerHandler.bind(WebSocketEvent.StringEvent, (iws, buffer) => {
     writeStringToBuffer('server says hi', outBuffer, NUM_BYTES_UINT8);
     webSocketServerHandler.send(iws, outBuffer);
 });
-</pre>
+```
 
 <br>
 
