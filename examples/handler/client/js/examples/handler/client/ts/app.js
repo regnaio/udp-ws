@@ -13,15 +13,17 @@ const WebSocketHandler_1 = require("./../../../../src/client/ts/WebSocketHandler
 (() => __awaiter(void 0, void 0, void 0, function* () {
     const webSocketHandler = new WebSocketHandler_1.WebSocketHandler('ws://localhost:3000', WebSocketHandler_1.WebSocketType.UDP);
     // const webSocketHandler = new WebSocketHandler('ws://13.59.33.46:3000', WebSocketType.UDP);
-    webSocketHandler.bind('server', data => {
+    webSocketHandler.bind('ServerResponseEvent', data => {
         console.log(data);
     });
     try {
         yield webSocketHandler.connect();
         setInterval(() => {
             webSocketHandler.send({
-                event: 'client',
-                data: {}
+                event: 'ClientMessageEvent',
+                data: {
+                    message: 'client says hi'
+                }
             });
         }, 1000);
     }

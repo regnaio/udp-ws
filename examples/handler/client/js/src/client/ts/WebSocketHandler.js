@@ -65,6 +65,7 @@ class BinaryWebSocketHandler {
             this._ws.onclose = ev => {
             };
             this._ws.onopen = ev => {
+                this._ws.binaryType = 'arraybuffer';
                 resolve();
             };
             this._ws.onerror = ev => {
@@ -73,20 +74,20 @@ class BinaryWebSocketHandler {
             if (this._type === WebSocketType.TCP && this._ws.readyState === WebSocket.OPEN) {
                 resolve();
             }
-            // if (this._type === WebSocketType.UDP && this._ws.readyState === 'open') {
-            //   resolve();
-            // }
+            if (this._type === WebSocketType.UDP && this._ws.readyState === 'open') {
+                resolve();
+            }
         });
     }
     bind(event, callback) {
         this._callbacks[event] = callback;
     }
-    send(packet) {
-        this._ws.send(packet);
+    send(buffer) {
+        this._ws.send(buffer);
     }
-    dispatch(packet) {
-        const view = new DataView(packet);
-        this._callbacks[view.getUint8(0)](packet);
+    dispatch(buffer) {
+        const view = new DataView(buffer);
+        this._callbacks[view.getUint8(0)](buffer);
     }
 }
 exports.BinaryWebSocketHandler = BinaryWebSocketHandler;

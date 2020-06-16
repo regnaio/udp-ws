@@ -5,12 +5,14 @@ import { WebSocketType, WebSocketServerHandler } from './../../../../src/server/
 
 const webSocketServerHandler = new WebSocketServerHandler(3000, WebSocketType.UDP);
 
-webSocketServerHandler.bind('client', (iws, data) => {
+webSocketServerHandler.bind('ClientMessageEvent', (iws, data) => {
 	console.log(data);
 	webSocketServerHandler.send(iws, {
-		event: 'server',
-		data: {}
-	})
+		event: 'ServerResponseEvent',
+		data: {
+			reply: 'server says hi'
+		}
+	});
 });
 
 // see tsconfig rootDirs and js folder to see why we have so many ../

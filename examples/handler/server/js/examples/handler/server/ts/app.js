@@ -7,11 +7,13 @@ const express_1 = __importDefault(require("express"));
 const app = express_1.default();
 const WebSocketServerHandler_1 = require("./../../../../src/server/ts/WebSocketServerHandler");
 const webSocketServerHandler = new WebSocketServerHandler_1.WebSocketServerHandler(3000, WebSocketServerHandler_1.WebSocketType.UDP);
-webSocketServerHandler.bind('client', (iws, data) => {
+webSocketServerHandler.bind('ClientMessageEvent', (iws, data) => {
     console.log(data);
     webSocketServerHandler.send(iws, {
-        event: 'server',
-        data: {}
+        event: 'ServerResponseEvent',
+        data: {
+            reply: 'server says hi'
+        }
     });
 });
 // see tsconfig rootDirs and js folder to see why we have so many ../
