@@ -4,9 +4,9 @@
 
 <em>“I feel what is needed is an UDP version of WebSockets. That’s all I wish we had.”</em> - Matheus Valadares, creator of [agar.io](https://agar.io/)
 
-[WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket) is built on TCP. UDP is much preferred over TCP for networking in realtime multiplayer games. Refer to the awesome visualizations in [Gaffer On Games: Deterministic Lockstep](https://gafferongames.com/post/deterministic_lockstep/) to see why.
+[WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket) is built on TCP. However, UDP is much preferred over TCP for networking in realtime multiplayer games. Refer to the awesome visualizations in [Gaffer On Games: Deterministic Lockstep](https://gafferongames.com/post/deterministic_lockstep/) to see why.
 
-<em>udp-ws</em> is built on [WebRTC](https://webrtc.org/), which allows peer-to-peer UDP communication in the browser. However, <em>udp-ws</em> is designed for client-server communication (e.g. for server-authoritative browser games), not for peer-to-peer communication. <em>udp-ws</em> accomplishes this by treating your server as a peer.
+<em>udp-ws</em> is a UDP version of WebSocket built on [WebRTC](https://webrtc.org/), which allows peer-to-peer UDP communication in the browser. However, <em>udp-ws</em> is designed for client-server communication (e.g. for server-authoritative browser games), not for peer-to-peer communication. <em>udp-ws</em> accomplishes this by treating your server as a peer.
 
 <em>udp-ws</em> is inspired by and includes code snippets from [geckos.io](https://github.com/geckosio/geckos.io) by [yandeu](https://github.com/yandeu) and [node-webrtc-examples](https://github.com/node-webrtc/node-webrtc-examples).
 
