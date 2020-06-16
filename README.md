@@ -242,6 +242,21 @@ You can then run `npm run launch` in `examples/<name of example>/server/`, as me
 
 <br>
 
+## Production
+
+Before deploying to production, provision your own dedicated ICE/STUN servers and add them to [`iceServers.ts`](https://github.com/regnaio/udp-ws/blob/master/src/server/ts/iceServers.ts). By default, STUN servers by Google are included for development:
+
+```ts
+export const iceServers: RTCIceServer[] = [
+    { urls: 'stun:stun1.l.google.com:19302' },
+    { urls: 'stun:stun2.l.google.com:19302' },
+    { urls: 'stun:stun3.l.google.com:19302' },
+    { urls: 'stun:stun4.l.google.com:19302' }
+];
+```
+
+<br>
+
 ## Repository Structure
 
 #### `src/` contains the library source code
