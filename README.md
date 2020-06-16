@@ -53,7 +53,7 @@ In `examples/barebones/server/`, run `npm i` followed by `npm run launch`, and s
 
 <br>
 
-#### 2. `examples/handler/` - Handling WebSocket life cycle, messaging, and events using
+#### 2. `examples/handler/` - Handling WebSocket life cycle, messaging, and event callbacks using
 - [`WebSocketHandler`](https://github.com/regnaio/udp-ws/blob/master/src/client/ts/WebSocketHandler.ts)
 - [`WebSocketServerHandler`](https://github.com/regnaio/udp-ws/blob/master/src/server/ts/WebSocketServerHandler.ts)
 
@@ -117,7 +117,7 @@ In `examples/handler/server/`, run `npm i` followed by `npm run launch`.
 
 <br>
 
-#### 3. `examples/binaryHandler/` - Handling WebSocket life cycle, binary messaging, and events using
+#### 3. `examples/binaryHandler/` - Handling WebSocket life cycle, binary messaging, and event callbacks using
 - [`BinaryWebSocketHandler`](https://github.com/regnaio/udp-ws/blob/master/src/client/ts/WebSocketHandler.ts)
 - [`BinaryWebSocketServerHandler`](https://github.com/regnaio/udp-ws/blob/master/src/server/ts/WebSocketServerHandler.ts)
 
