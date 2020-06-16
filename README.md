@@ -21,8 +21,8 @@
 <br>
 
 Client (resembles [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)):
-<pre>
-const ws = new <b>UDPWebSocket</b>('ws://localhost:3000');
+```js
+const ws = new UDPWebSocket('ws://localhost:3000');
 
 ws.onmessage = ev => {
     console.log(ev.data);
@@ -33,7 +33,7 @@ setInterval(() => {
         ws.send('client says hi');
     }
 }, 1000);
-</pre>
+```
 
 Server (resembles [ws](https://www.npmjs.com/package/ws)):
 <pre>
